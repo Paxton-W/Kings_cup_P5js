@@ -284,7 +284,7 @@ function mousePressed(){
   bg_clr.b = 173;
 
   currentNumber = int(random(1,14));
-  currentNumber = 11
+  //currentNumber = 11
   never_current = random(never_list)
   categories_current = random(categories_list)
   if_new_change = true;
@@ -293,12 +293,12 @@ function mousePressed(){
   switch(currentNumber){
     case 6:
       set_delays = frameCount
-      if_new_change=false;
+      if_new_change = false;
       if_case_6 = false;
     break;
     case 13:
-      if_new_change=false;
-      king_cup_times++
+      if_new_change = false;
+      king_cup_times++;
     break;
   }
   hitsound2.play();
