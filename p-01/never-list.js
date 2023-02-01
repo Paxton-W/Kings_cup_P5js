@@ -50,3 +50,6 @@ Never have I ever broken up with someone over text.
 Never have I ever had a crush on an SO’s best friend.`.split("\nNever have I ever ")
 
 
+let categories_list = [];
+
+categories_list = 'Fruits, Holidays, Jungle animals, Sports, Transportation, School subjects, Currency,  Countries, Planets, Colours, Languages, Musical instruments, Musical genres, Things that fly'.split(", ")
