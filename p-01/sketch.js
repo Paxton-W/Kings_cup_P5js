@@ -25,10 +25,10 @@ let set_delays = -70;
 
 function preload() {
   soundFormats('mp3');
-  hitSound = loadSound('assets/Newhit');
+  hitSound = loadSound('assets/Newhit.mp3');
   soundFormats('wav');
-  hitsound2 = loadSound('assets/chillhit');
-  winsound = loadSound('assets/Horn');
+  hitsound2 = loadSound('assets/chillhit.wav');
+  winsound = loadSound('assets/Horn.wav');
 }
 
 function setup() {
