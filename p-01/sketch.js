@@ -32,7 +32,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(480, 720);
+  createCanvas(390, 720);
 }
 
 
@@ -269,7 +269,7 @@ function friends_drink_record_2(){
   friends_drink.push(name1)
   name2 = prompt("Who you select?", "Aiden"); 
   friends_drink.push(name2)
-  
+
 }
 
 
