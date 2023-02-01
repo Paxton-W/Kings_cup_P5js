@@ -33,6 +33,7 @@ function preload() {
 
 function setup() {
   createCanvas(480, 720);
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 
