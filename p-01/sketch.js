@@ -1,5 +1,6 @@
 let greeting = []
 let currentNumber = 0;
+let currentText;
 let bg_clr = {r:14,g:93,b:124}
 
 let hitSound, hitsound2;
@@ -43,82 +44,141 @@ function draw() {
   if(bg_clr.g>53){bg_clr.g-=9};
   if(bg_clr.b>89){bg_clr.b-=3}
 
-
+  push()
+  fill(255,100);
+  textSize(20);
+  text('Drinking Game',10,715);
+  textSize(15);
+  text('By Paxton',350,715);
+  text('ver.1.0',430,715);
+  text('King : '+king_cup_times,width/2,715)
+  textAlign(CENTER);
+  textSize(25);
+  pop()
+  push()
   fill(255);
-  textSize(30);
-  text('Drinking Game',100,30);
-  text('king:'+king_cup_times,300,200)
-  textSize(150);
-  text(currentNumber,100,200);
-
+  textSize(25);
+  textAlign(CENTER);
+  if(king_cup_times>3){
+    fill(255,255,0)
+  }
+  text('G',width/2+35,400);
+  if(king_cup_times>2){
+    fill(255,255,0)
+  }
+  text('N',width/2+10,400);
+  if(king_cup_times>1){
+    fill(255,255,0)
+  }
+  text('I',width/2-10,400);
+  if(king_cup_times>0){
+    fill(255,255,0)
+  }
+  text('K',width/2-30,400);
   
+  
+  
+  pop()
+  push()
+  fill(255)
+  textSize(150);
+  textAlign(CENTER);
+  text(currentNumber,width/2,height/2);
+  pop()
+  push()
+  fill(255);
   for(let i = 0;i<friends_drink.length-1;i+=2){
-    textSize(10);
-  text(friends_drink[1]+" needs to drink when "+friends_drink[0]+" drink",100,500+i*10);
-    
+    textSize(15);
+    fill(244, 127, 48)
+  text(friends_drink[1]+" needs to drink when "+friends_drink[0]+" drink",40,630+i*7);
+    push()
+    rotate(PI)
+    text(friends_drink[1]+" needs to drink when "+friends_drink[0]+" drink",-460,-70+i*7);
+    pop()
     
   }
-  
+  pop()
+  push()
+  fill(255);
   textSize(50);
+  textAlign(CENTER);
+  text(currentText,width/2,600)
+
+  rotate(PI/2)
+  text(currentText,height/2,-100)
+
+  rotate(PI/2)
+  text(currentText,-width/2,-100)
+
+  rotate(PI/2)
+  text(currentText,-height/2,400)
+  pop()
+  push()
   switch(currentNumber){
     case 1:
-      text('Pick sb to drink',desc_wd_x,desc_wd_y)
+      currentText = 'Pick sb to drink'
       if_new_change = false;
     break;
     case 2:
-      text('Two is you',desc_wd_x,desc_wd_y)
+      currentText = 'Two is you'
       if_new_change = false;
     break;
     case 3:
-      text('Three is me',desc_wd_x,desc_wd_y)
+      currentText = 'Three is me'
       if_new_change = false;
     break;
     case 4:
-      text('Four is Whores ',desc_wd_x,desc_wd_y)
+      currentText = 'Four is Whores '
       if_new_change = false;
     break;
     case 5:
-      text('Five is Guys',desc_wd_x,desc_wd_y)
+      currentText = 'Five is Guys'
       if_new_change = false;
     break;
     case 6:
-      text('friend drinks',desc_wd_x,desc_wd_y)
+      currentText = 'friend drinks'
       if_case_6 = true;
     break;
     case 7:
-      text('Heaven',desc_wd_x,desc_wd_y)
+      currentText = 'Heaven'
       if_new_change = false;
     break;
     case 8:
-      text('2',desc_wd_x,desc_wd_y)
+      currentText = '2'
       if_new_change = false;
     break;
     case 9:
-      text('Rhyme Time',desc_wd_x,desc_wd_y)
+      currentText = 'Rhyme Time'
       if_new_change = false;
     break;
     case 10:
-      text('Categories',desc_wd_x,desc_wd_y)
+      currentText = 'Categories'
       if_new_change = false;
     break;
     case 11:
-      text('Never Have I Ever',desc_wd_x,desc_wd_y)
+      currentText = 'Never Have I Ever'
       if_new_change = false;
       push()
-      textSize(25);
-      text(never_current,desc_wd_x,desc_wd_y+50)
+      fill(255,100,100)
+      textSize(20);
+      textAlign(CENTER)
+      rotate(PI/2);
+      text(never_current,height/2,-50)
+      rotate(PI);
+      text(never_current,-height/2,450)
+
       pop()
     break;
     case 12:
-      text('Questions',desc_wd_x,desc_wd_y)
+      currentText = 'Questions'
       if_new_change = false;
     break;
     case 13:
-      text(`King's Cup`,desc_wd_x,desc_wd_y)
+      currentText = `King's Cup`
       if_case_13 = true;
     break;
   }
-
+pop()
 
   if(frameCount-set_delays===60){
     friends_drink_record_2()
@@ -155,7 +215,8 @@ function mousePressed(){
   bg_clr.g = 238;
   bg_clr.b = 173;
 
-  currentNumber = int(random(1,14));
+  //currentNumber = int(random(1,14));
+  currentNumber = 6
   never_current = random(never_list)
   if_new_change = true;
 
