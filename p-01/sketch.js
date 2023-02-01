@@ -32,7 +32,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(390, 667);
+  createCanvas(390, 660);
 }
 
 
@@ -65,19 +65,19 @@ function draw() {
   if(king_cup_times>3){
     fill(255,255,0)
   }
-  text('G',width/2+35,430);
+  text('G',width/2+35-4,410);
   if(king_cup_times>2){
     fill(255,255,0)
   }
-  text('N',width/2+10,430);
+  text('N',width/2+10-4,410);
   if(king_cup_times>1){
     fill(255,255,0)
   }
-  text('I',width/2-10,430);
+  text('I',width/2-10-4,410);
   if(king_cup_times>0){
     fill(255,255,0)
   }
-  text('K',width/2-30,430);
+  text('K',width/2-30-4,410);
   
   
   
@@ -86,7 +86,7 @@ function draw() {
   fill(255)
   textSize(150);
   textAlign(CENTER);
-  text(currentNumber,width/2,height/2+30);
+  text(currentNumber,width/2,height/2+40);
   pop()
   push()
   fill(255);
@@ -95,19 +95,19 @@ function draw() {
     fill(244, 127, 48)
     textStyle(BOLD)
     textSize(20);
-    text(friends_drink[i+1],40,630+i*9);
+    text(friends_drink[i+1],40,height-80+i*9);
     textStyle(ITALIC)
     textSize(15);
     fill(237, 164, 116)
-    text(" needs to drink when ",40+friends_drink[i+1].length*11,630+i*9);
+    text(" needs to drink when ",40+friends_drink[i+1].length*11,height-80+i*9);
     textStyle(BOLD)
     textSize(20);
     fill(244, 127, 48)
-    text(friends_drink[i],190+friends_drink[i+1].length*11,630+i*9);
+    text(friends_drink[i],40+150+friends_drink[i+1].length*11,height-80+i*9);
     textStyle(ITALIC)
     textSize(15);
     fill(237, 164, 116)
-    text("drink",190+friends_drink[i+1].length*11+friends_drink[i].length*11,630+i*9);
+    text("drink",40+150+friends_drink[i+1].length*11+friends_drink[i].length*11,height-80+i*9);
     pop()
     push()
     rotate(PI)
@@ -115,37 +115,37 @@ function draw() {
     fill(244, 127, 48)
     textStyle(BOLD)
     textSize(20);
-    text(friends_drink[i+1],-440,-90+i*9);
+    text(friends_drink[i+1],-width+40,-80+i*9);
     textStyle(ITALIC)
     textSize(15);
     fill(237, 164, 116)
-    text(" needs to drink when ",-440+friends_drink[i+1].length*11,-90+i*9);
+    text(" needs to drink when ",-width+40+friends_drink[i+1].length*11,-80+i*9);
     textStyle(BOLD)
     textSize(20);
     fill(244, 127, 48)
-    text(friends_drink[i],-290+friends_drink[i+1].length*11,-90+i*9);
+    text(friends_drink[i],-width+40+150+friends_drink[i+1].length*11,-80+i*9);
     textStyle(ITALIC)
     textSize(15);
     fill(237, 164, 116)
-    text("drink",-290+friends_drink[i+1].length*11+friends_drink[i].length*11,-90+i*9);
+    text("drink",-width+40+150+friends_drink[i+1].length*11+friends_drink[i].length*11,-80+i*9);
     pop()
     
   }
   pop()
   push()
   fill(255);
-  textSize(50);
+  textSize(30);
   textAlign(CENTER);
-  text(currentText,width/2,600)
+  text(currentText,width/2,height-100)
 
   rotate(PI/2)
-  text(currentText,height/2,-80)
+  text(currentText,height/2,-50)
 
   rotate(PI/2)
-  text(currentText,-width/2,-120)
+  text(currentText,-width/2,-100)
 
   rotate(PI/2)
-  text(currentText,-height/2,400)
+  text(currentText,-height/2,width-50)
   pop()
   push()
   switch(currentNumber){
@@ -154,10 +154,10 @@ function draw() {
       if_new_change = false;
       push()
       fill(19, 196, 0)
-      textSize(16);
-      text(' All players start drinking their beverage at the same time.\n No player can stop drinking until the player to their left stops.',30,500)
+      textSize(14);
+      text(' All players start drinking their beverage at the same time.\n No player can stop drinking until the player to their left stops.',10,height-180)
       rotate(PI)
-      text(' All players start drinking their beverage at the same time.\n No player can stop drinking until the player to their left stops.',-450,-220)
+      text(' All players start drinking their beverage at the same time.\n No player can stop drinking until the player to their left stops.',-width+10,-180)
       pop()
     break;
     case 2:
@@ -200,14 +200,13 @@ function draw() {
       textSize(30);
       textStyle(BOLD)
       textAlign(CENTER)
+      text(categories_current,width/2,height-150)
       rotate(PI/2);
-      text(categories_current,height/2,-20)
-      rotate(PI);
-      text(categories_current,-height/2,460)
+      text(categories_current,height/2,-15)
       rotate(PI/2);
-      text(categories_current,width/2,540)
-      rotate(PI);
-      text(categories_current,-width/2,-180)
+      text(categories_current,-width/2,-150)
+      rotate(PI/2);
+      text(categories_current,-height/2,width-15)
       pop()
     break;
     case 11:
@@ -215,12 +214,15 @@ function draw() {
       if_new_change = false;
       push()
       fill(255,100,100)
-      textSize(20);
+      textSize(18);
       textAlign(CENTER)
+      text(never_current,width/2,height-150)
       rotate(PI/2);
-      text(never_current,height/2,-50)
-      rotate(PI);
-      text(never_current,-height/2,450)
+      text(never_current,height/2,-25)
+      rotate(PI/2);
+      text(never_current,-width/2,-150)
+      rotate(PI/2);
+      text(never_current,-height/2,width-25)
       pop()
     break;
     case 12:
@@ -232,11 +234,11 @@ function draw() {
       if_case_13 = true;
       push()
       fill(225, 16, 150)
-      textSize(25);
+      textSize(20);
       textStyle(BOLD)
-      text(`Pour your drink into king's cup`,50,530)
+      text(`Pour your drink into king's cup`,50,height-130)
       rotate(PI)
-      text(`Pour your drink into king's cup`,-420,-190)
+      text(`Pour your drink into king's cup`,-width+50,-130)
       pop()
     break;
   }
@@ -282,7 +284,7 @@ function mousePressed(){
   bg_clr.b = 173;
 
   currentNumber = int(random(1,14));
-  //currentNumber = 13
+  currentNumber = 11
   never_current = random(never_list)
   categories_current = random(categories_list)
   if_new_change = true;

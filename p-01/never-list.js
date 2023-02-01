@@ -5,7 +5,7 @@ Never have I ever Googled myself.
 Never have I ever traveled solo.
 Never have I ever seen a ghost.
 Never have I ever toilet-papered someone's house.
-Never have I ever laughed so hard I spit out my drink.
+Never have I ever laughed so hard \nI spit out my drink.
 Never have I ever pretended to be on the phone.
 Never have I ever met a celebrity.
 Never have I ever sleepwalked.
@@ -24,13 +24,13 @@ Never have I ever played spin the bottle.
 Never have I ever snooped through someone's phone. 
 Never have I ever snuck into a movie theater.
 Never have I ever kissed a friend's ex.
-Never have I ever told someone "I love you" without meaning it.
+Never have I ever told someone\n "I love you" without meaning it.
 Never have I ever smoked a cigarette. 
 Never have I ever given a lap dance.
 Never have I ever gotten a lap dance.
 Never have I ever cheated on a test.
 Never have I ever used a dating app.
-Never have I ever kissed more than one person in 24 hours.
+Never have I ever kissed more than one person \nin 24 hours.
 Never have I ever cheated on someone.
 Never have I ever been cheated on. 
 Never have I ever had a negative bank account balance.
