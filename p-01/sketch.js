@@ -2,6 +2,7 @@ let greeting = []
 let currentNumber = 0;
 let currentText;
 let bg_clr = {r:14,g:93,b:124}
+let center_e_clr;
 
 let hitSound, hitsound2;
 
@@ -33,6 +34,7 @@ function preload() {
 
 function setup() {
   createCanvas(390, 660);
+  center_e_clr = color(255,50)
 }
 
 
@@ -44,7 +46,8 @@ function draw() {
   if(bg_clr.r>0){bg_clr.r-=9};
   if(bg_clr.g>53){bg_clr.g-=9};
   if(bg_clr.b>89){bg_clr.b-=3}
-  fill(255,50)
+  //draw center ellipse
+  fill(center_e_clr)
   noStroke();
   ellipse(width/2,height/2,220);
   push()
@@ -99,15 +102,15 @@ function draw() {
     textStyle(ITALIC)
     textSize(15);
     fill(237, 164, 116)
-    text(" needs to drink when ",40+friends_drink[i+1].length*11,height-80+i*9);
+    text(" needs to drink when ",60+friends_drink[i+1].length*11,height-80+i*9);
     textStyle(BOLD)
     textSize(20);
     fill(244, 127, 48)
-    text(friends_drink[i],40+150+friends_drink[i+1].length*11,height-80+i*9);
+    text(friends_drink[i],60+150+friends_drink[i+1].length*11,height-80+i*9);
     textStyle(ITALIC)
     textSize(15);
     fill(237, 164, 116)
-    text("drink",40+150+friends_drink[i+1].length*11+friends_drink[i].length*11,height-80+i*9);
+    text("drink",80+150+friends_drink[i+1].length*11+friends_drink[i].length*11,height-80+i*9);
     pop()
     push()
     rotate(PI)
@@ -119,15 +122,15 @@ function draw() {
     textStyle(ITALIC)
     textSize(15);
     fill(237, 164, 116)
-    text(" needs to drink when ",-width+40+friends_drink[i+1].length*11,-80+i*9);
+    text(" needs to drink when ",-width+60+friends_drink[i+1].length*11,-80+i*9);
     textStyle(BOLD)
     textSize(20);
     fill(244, 127, 48)
-    text(friends_drink[i],-width+40+150+friends_drink[i+1].length*11,-80+i*9);
+    text(friends_drink[i],-width+60+150+friends_drink[i+1].length*11,-80+i*9);
     textStyle(ITALIC)
     textSize(15);
     fill(237, 164, 116)
-    text("drink",-width+40+150+friends_drink[i+1].length*11+friends_drink[i].length*11,-80+i*9);
+    text("drink",-width+80+150+friends_drink[i+1].length*11+friends_drink[i].length*11,-80+i*9);
     pop()
     
   }
@@ -153,44 +156,86 @@ function draw() {
       currentText = 'Waterfall'
       if_new_change = false;
       push()
-      fill(19, 196, 0)
-      textSize(14);
-      text(' All players start drinking their beverage at the same time.\n No player can stop drinking until the player to their left stops.',10,height-180)
+      fill(180, 207, 102)
+      textSize(24);
+      textAlign(CENTER)
+      text(' Everbody start drinking.\n No one can stops until you do.',width/2,height-180)
       rotate(PI)
-      text(' All players start drinking their beverage at the same time.\n No player can stop drinking until the player to their left stops.',-width+10,-180)
+      text(' Everbody start drinking.\n No one can stops until you do.',-width/2,-180)
       pop()
+      center_e_clr = color(242, 68, 5)
     break;
     case 2:
       currentText = 'Two is you'
       if_new_change = false;
+      push()
+      fill(19, 196, 0)
+      textSize(25);
+      textAlign(CENTER)
+      text('Choose someone to drink',width/2,height-150)
+      rotate(PI)
+      text('Choose someone to drink',-width/2,-150)
+      pop()
+      center_e_clr = color(166, 135, 78)
     break;
     case 3:
       currentText = 'Three is me'
       if_new_change = false;
+      push()
+      fill(19, 196, 0)
+      textSize(28);
+      textAlign(CENTER)
+      text('You drink',width/2,height-150)
+      rotate(PI)
+      text('You drink',-width/2,-150)
+      pop()
+      center_e_clr = color(2, 110, 129)
     break;
     case 4:
       currentText = 'Four is Girls'
       if_new_change = false;
+      center_e_clr = color(242, 102, 139)
     break;
     case 5:
       currentText = 'Five is Guys'
       if_new_change = false;
+      center_e_clr = color(0, 153, 221)
     break;
     case 6:
       currentText = 'Select a Mate'
       if_case_6 = true;
+      center_e_clr = color(4, 191, 157)
     break;
     case 7:
-      currentText = 'Pick sb to drink'
+      currentText = 'Heaven'
       if_new_change = false;
+      push()
+      fill(19, 196, 0)
+      textSize(22);
+      textAlign(CENTER)
+      text('The last person put both hands \nin the air drinks',width/2,height-170)
+      rotate(PI)
+      text('The last person put both hands \nin the air drinks',-width/2,-170)
+      pop()
+      center_e_clr = color(95, 205, 217)
     break;
     case 8:
       currentText = 'Everyone Drinks'
       if_new_change = false;
+      center_e_clr = color(166, 188, 9)
     break;
     case 9:
       currentText = 'Rhyme Time'
       if_new_change = false;
+      center_e_clr = color(140, 31, 40)
+      push()
+      fill(242, 68, 5)
+      textSize(26);
+      textAlign(CENTER)
+      text('Think more than\n3 seconds drinks',width/2,height-170)
+      rotate(PI)
+      text('Think more than\n3 seconds drinks',-width/2,-170)
+      pop()
     break;
     case 10:
       currentText = 'Categories'
@@ -208,26 +253,37 @@ function draw() {
       rotate(PI/2);
       text(categories_current,-height/2,width-15)
       pop()
+      center_e_clr = color(89, 28, 33)
     break;
     case 11:
       currentText = 'Never Have I Ever'
       if_new_change = false;
       push()
       fill(255,100,100)
-      textSize(18);
+      textSize(22);
       textAlign(CENTER)
-      text(never_current,width/2,height-150)
+      text(never_current,width/2,height-130)
       rotate(PI/2);
       text(never_current,height/2,-25)
       rotate(PI/2);
-      text(never_current,-width/2,-150)
+      text(never_current,-width/2,-130)
       rotate(PI/2);
       text(never_current,-height/2,width-25)
       pop()
+      center_e_clr = color(242, 147, 37)
     break;
     case 12:
-      currentText = 'Questions'
+      currentText = 'Rule'
       if_new_change = false;
+      push()
+      fill(242, 147, 37)
+      textSize(25);
+      textAlign(CENTER)
+      text('Make a rule,\n valid until next 12\n Anyone break the rule drinks',width/2,height-200)
+      rotate(PI)
+      text('Make a rule,\n valid until next 12\n Anyone break the rule drinks',-width/2,-200)
+      pop()
+      center_e_clr = color(2,82,89)
     break;
     case 13:
       currentText = `King's Cup`
@@ -236,10 +292,12 @@ function draw() {
       fill(225, 16, 150)
       textSize(20);
       textStyle(BOLD)
-      text(`Pour your drink into king's cup`,50,height-130)
+      textAlign(CENTER)
+      text(`Pour your drink into king's cup`,width/2,height-130)
       rotate(PI)
-      text(`Pour your drink into king's cup`,-width+50,-130)
+      text(`Pour your drink into king's cup`,-width/2,-130)
       pop()
+      center_e_clr = color(242, 147, 37)
     break;
   }
 pop()
@@ -284,7 +342,7 @@ function mousePressed(){
   bg_clr.b = 173;
 
   currentNumber = int(random(1,14));
-  //currentNumber = 11
+  //currentNumber = 1
   never_current = random(never_list)
   categories_current = random(categories_list)
   if_new_change = true;
