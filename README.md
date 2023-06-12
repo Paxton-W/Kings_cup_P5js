@@ -1,5 +1,5 @@
-# Han-Sheng-Wang
- 01-2023
+# Paxton W
+ 01-2023 v 1.0
 
 To play the Kings drinking game using the app, follow these instructions:
 1.	Gather a group of at least 4 people and seat them around a table.
