@@ -1,6 +1,6 @@
 let center_e_clr;
 let game_over = false;
-
+let draw_button
 function setup() {
   createCanvas(390, 660);
   center_e_clr = color(255, 50)
@@ -10,6 +10,10 @@ function setup() {
   yourNameInput.hide();
   partnerNameInput.hide();
   button.hide();
+  draw_button = createButton("^")
+  draw_button.position(135,380)
+  draw_button.mousePressed(draw_a_card)
+  draw_button.addClass("button-74")
 }  
 
 function draw() {
@@ -38,10 +42,10 @@ function draw() {
 }
 
 function mousePressed(){
- draw_a_card()
+ //draw_a_card()
 }
 
 
 function touchStarted() {
-  draw_a_card()
+ // draw_a_card()
 }

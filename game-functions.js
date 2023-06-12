@@ -17,6 +17,9 @@ let name1, name2;
 
 let set_delays = -70;
 
+let kings_height = 255
+
+
 function background_control() {
   background(bg_clr.r, bg_clr.g, bg_clr.b);
   if (bg_clr.r > 0) {
@@ -60,19 +63,19 @@ function draw_center_items() {
   if (king_cup_times > 3) {
     fill(255, 255, 0);
   }
-  text("G", width / 2 + 35 - 4, 410);
+  text("G", width / 2 + 35 - 4, kings_height);
   if (king_cup_times > 2) {
     fill(255, 255, 0);
   }
-  text("N", width / 2 + 10 - 4, 410);
+  text("N", width / 2 + 10 - 4, kings_height);
   if (king_cup_times > 1) {
     fill(255, 255, 0);
   }
-  text("I", width / 2 - 10 - 4, 410);
+  text("I", width / 2 - 10 - 4, kings_height);
   if (king_cup_times > 0) {
     fill(255, 255, 0);
   }
-  text("K", width / 2 - 30 - 4, 410);
+  text("K", width / 2 - 30 - 4, kings_height);
   pop();
 
   //draw the center big current number
@@ -172,6 +175,7 @@ function friends_drink_record() {
   yourNameInput.hide();
   partnerNameInput.hide();
   button.hide();
+  draw_button.show()
   drew_timer = millis()+2500
   if (yourNameInput.value().length > 0) {
     friends_drink.push(yourNameInput.value());
@@ -203,7 +207,7 @@ function draw_case_6_in_draw() {
     fill(255)
     text("Select a Mate",width/2,height-100)
     textAlign(LEFT)
-    
+    draw_button.hide()
     yourNameInput.show()
   partnerNameInput.show()
   button.show()
@@ -226,6 +230,8 @@ function draw_case_6_in_draw() {
   }
 }
 let drew_timer = 0;
+
+
 function draw_a_card() {
   if (draw_case_6) {
     return;
