@@ -1,5 +1,6 @@
 let currentNumber = 0;
 let currentText;
+let currentDis = "n";
 let bg_clr = { r: 14, g: 93, b: 124 };
 
 let desc_wd_x = 50;
@@ -17,11 +18,8 @@ let name1, name2;
 
 let set_delays = -70;
 
-let kings_height = 255
-
-
 function background_control() {
-  background(bg_clr.r, bg_clr.g, bg_clr.b);
+  background(bk_color);
   if (bg_clr.r > 0) {
     bg_clr.r -= 9;
   }
@@ -36,14 +34,14 @@ function background_control() {
 function draw_credit() {
   push();
   fill(255, 100);
-  textSize(10);
-  text("Drinking Game", 10, height - 4);
-  textSize(10);
-  text("By Paxton", 300, height - 4);
-  text("ver.1.2", 350, height - 4);
-  text("King : " + king_cup_times, width / 2, height - 4);
+  textSize(textSize_s);
+  text("Drinking Game", width * 0.05, height - 4);
+  textSize(textSize_s);
+  text("By Paxton", width * 0.35, height - 4);
+  text("ver.2.0", width * 0.8, height - 4);
+  text("King : " + king_cup_times, width * 0.6, height - 4);
   textAlign(CENTER);
-  textSize(25);
+  textSize(textSize_s);
   pop();
 }
 
@@ -52,38 +50,39 @@ function draw_center_items() {
   push();
   fill(center_e_clr);
   noStroke();
-  ellipse(width / 2, height / 2, 220);
+  ellipse(width / 2, height / 2, windowSize_base * 200);
   pop();
 
   //draw the center king sign
   push();
   fill(255, 70);
-  textSize(25);
+  textSize(textSize_m);
   textAlign(CENTER);
+  let h = height * 0.52;
   if (king_cup_times > 3) {
     fill(255, 255, 0);
   }
-  text("G", width / 2 + 35 - 4, kings_height);
+  text("G", width * 0.56, h);
   if (king_cup_times > 2) {
     fill(255, 255, 0);
   }
-  text("N", width / 2 + 10 - 4, kings_height);
+  text("N", width * 0.52, h);
   if (king_cup_times > 1) {
     fill(255, 255, 0);
   }
-  text("I", width / 2 - 10 - 4, kings_height);
+  text("I", width * 0.48, h);
   if (king_cup_times > 0) {
     fill(255, 255, 0);
   }
-  text("K", width / 2 - 30 - 4, kings_height);
+  text("K", width * 0.44, h);
   pop();
 
   //draw the center big current number
   push();
   fill(255);
-  textSize(150);
+  textSize(textSize_l);
   textAlign(CENTER);
-  text(currentNumber, width / 2, height / 2 + 40);
+  text(currentNumber, width / 2, height * 0.47);
   pop();
 }
 
@@ -94,39 +93,39 @@ function draw_drink_mate_lines() {
     push();
     fill(244, 127, 48);
     textStyle(BOLD);
-    textSize(20);
-    text(friends_drink[i + 1], 40, height - 80 + i * 9);
+    textSize(textSize_s);
+    text(friends_drink[i + 1], 40, height * 0.82 + i * 9);
     textStyle(ITALIC);
-    textSize(15);
+    textSize(textSize_s);
     fill(237, 164, 116);
-    text(" needs to drink when ", 60 + friends_drink[i + 1].length * 11, height - 80 + i * 9);
+    text(" needs to drink when ", 60 + friends_drink[i + 1].length * 13, height * 0.82 + i * 9);
     textStyle(BOLD);
-    textSize(20);
+    textSize(textSize_s);
     fill(244, 127, 48);
-    text(friends_drink[i], 60 + 150 + friends_drink[i + 1].length * 11, height - 80 + i * 9);
+    text(friends_drink[i], 60 + 190 + friends_drink[i + 1].length * 13, height * 0.82 + i * 9);
     textStyle(ITALIC);
-    textSize(15);
+    textSize(textSize_s);
     fill(237, 164, 116);
-    text("drink", 80 + 150 + friends_drink[i + 1].length * 11 + friends_drink[i].length * 11, height - 80 + i * 9);
+    text("drink", 60 + 190 + friends_drink[i + 1].length * 13 + friends_drink[i].length * 13, height * 0.82 + i * 9);
     pop();
     push();
     rotate(PI);
     fill(244, 127, 48);
     textStyle(BOLD);
-    textSize(20);
-    text(friends_drink[i + 1], -width + 40, -80 + i * 9);
+    textSize(textSize_s);
+    text(friends_drink[i + 1], -width + 40, -height * 0.18 + i * 9);
     textStyle(ITALIC);
-    textSize(15);
+    textSize(textSize_s);
     fill(237, 164, 116);
-    text(" needs to drink when ", -width + 60 + friends_drink[i + 1].length * 11, -80 + i * 9);
+    text(" needs to drink when ", -width + 60 + friends_drink[i + 1].length * 13, -height * 0.18 + i * 9);
     textStyle(BOLD);
-    textSize(20);
+    textSize(textSize_s);
     fill(244, 127, 48);
-    text(friends_drink[i], -width + 60 + 150 + friends_drink[i + 1].length * 11, -80 + i * 9);
+    text(friends_drink[i], -width + 60 + 190 + friends_drink[i + 1].length * 13, -height * 0.18 + i * 9);
     textStyle(ITALIC);
-    textSize(15);
+    textSize(textSize_s);
     fill(237, 164, 116);
-    text("drink", -width + 80 + 150 + friends_drink[i + 1].length * 11 + friends_drink[i].length * 11, -80 + i * 9);
+    text("drink", -width + 60 + 190 + friends_drink[i + 1].length * 13 + friends_drink[i].length * 20, -height * 0.18 + i * 9);
     pop();
   }
   pop();
@@ -135,20 +134,39 @@ function draw_drink_mate_lines() {
 function draw_current_task() {
   push();
   fill(255);
-  textSize(30);
+  textSize(textSize_base);
   textAlign(CENTER);
 
-  text(currentText, width / 2, height - 100);
+  text(currentText, width / 2, height * 0.67);
 
   rotate(PI / 2);
-  text(currentText, height / 2, -50);
+  text(currentText, height / 2, -width * 0.2);
 
   rotate(PI / 2);
-  text(currentText, -width / 2, -100);
+  text(currentText, -width / 2, -height * 0.33);
 
   rotate(PI / 2);
-  text(currentText, -height / 2, width - 50);
+  text(currentText, -height / 2, width * 0.8);
   pop();
+
+  if (currentDis.length > 2) {
+    push();
+    fill(200);
+    textSize(textSize_s);
+    textAlign(CENTER);
+
+    text(currentDis, width / 2, height * 0.7);
+
+    rotate(PI / 2);
+    text(currentDis, height / 2, -width * 0.15);
+
+    rotate(PI / 2);
+    text(currentDis, -width / 2, -height * 0.3);
+
+    rotate(PI / 2);
+    text(currentDis, -height / 2, width * 0.85);
+    pop();
+  }
 }
 
 function if_game_over() {
@@ -160,9 +178,9 @@ function if_game_over() {
     rect(0, 200, width, 200);
     fill(0);
     textAlign(CENTER);
-    textSize(30);
+    textSize(textSize_base);
     text("You are the drinking KING!", width / 2, 260);
-    textSize(50);
+    textSize(textSize_base);
     text("Game Over", width / 2, 350);
     game_over = true;
   }
@@ -175,8 +193,8 @@ function friends_drink_record() {
   yourNameInput.hide();
   partnerNameInput.hide();
   button.hide();
-  draw_button.show()
-  drew_timer = millis()+2500
+  draw_button.show();
+  drew_timer = millis() + 2500;
   if (yourNameInput.value().length > 0) {
     friends_drink.push(yourNameInput.value());
   } else {
@@ -188,41 +206,40 @@ function friends_drink_record() {
     friends_drink.push("Poor Guy");
   }
 }
-let yourNameInput, partnerNameInput,button
+let yourNameInput, partnerNameInput, button;
 function draw_case_6_in_draw() {
   if (draw_case_6) {
-    push()
-    rectMode(CENTER)
-    fill(4, 191, 157)
-    noStroke()
-    rect(width / 2, height / 2, width * 0.8, height * 0.8,20)
-    
-   
-    fill(155)
-    textSize(500)
-    textAlign(CENTER)
-    text("6", width / 2, height - 200)
-    textSize(30)
-    
-    fill(255)
-    text("Select a Mate",width/2,height-100)
-    textAlign(LEFT)
-    draw_button.hide()
-    yourNameInput.show()
-  partnerNameInput.show()
-  button.show()
-    text("Enter your name: ", 50, 200);
-    //yourNameInput = createInput("Jerry", "text");
-    yourNameInput.position(50, 230);
+    push();
+    rectMode(CENTER);
+    fill(30);
+    noStroke();
+    rect(width / 2, height / 2, width * 0.8, height * 0.8, 20);
 
-    text("Enter partner's name: ", 50, 300);
+    fill(65);
+    textSize(textSize_x);
+    textAlign(CENTER);
+    text("6", width / 2, height * 0.6);
+
+    textSize(textSize_base);
+    fill(255);
+    text("Select a Mate", width / 2, height * 0.2);
+    textAlign(LEFT);
+    draw_button.hide();
+    yourNameInput.show();
+    partnerNameInput.show();
+    button.show();
+    text("Your name: ", width * 0.15, height * 0.3);
+    //yourNameInput = createInput("Jerry", "text");
+    yourNameInput.position(width * 0.15, height * 0.35);
+
+    text("Partner's name: ", width * 0.15, height * 0.5);
     //partnerNameInput = createInput("Max", "text");
-    partnerNameInput.position(50, 330);
+    partnerNameInput.position(width * 0.15, height * 0.55);
 
     //button = createButton("submit");
-    button.position(50, 400);
+    button.position(width * 0.15, height * 0.65);
     button.mousePressed(friends_drink_record);
-    pop()
+    pop();
   } else {
     // yourNameInput.hide();
     // partnerNameInput.hide();
@@ -230,7 +247,7 @@ function draw_case_6_in_draw() {
   }
 }
 let drew_timer = 0;
-
+let new_num = 0
 
 function draw_a_card() {
   if (draw_case_6) {
@@ -240,9 +257,9 @@ function draw_a_card() {
     return;
   }
   if (millis() - drew_timer < 700) {
-    return
+    return;
   }
-  drew_timer = millis()
+  drew_timer = millis();
   hitsound2.stop();
   //set background brighter when touch the screen
   bg_clr.r = 244;
@@ -250,10 +267,20 @@ function draw_a_card() {
   bg_clr.b = 173;
 
   //pick a random number
-  currentNumber = int(random(1, 14));
+
+  
+    let n = int(random(cards.length))
+    currentNumber = cards[n]
+    cards.splice(n, 1)
+    print(cards)
+  
+  // currentNumber = random(cards)
+  // new_num = int(random(1, 14));
+
+
 
   //this line is only for testing
-  //currentNumber = 6
+  //currentNumber = 6;
   //currentNumber = int(random(6, 8));
 
   //random pick for case never ever and categories

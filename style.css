@@ -8,8 +8,11 @@ canvas {
 }
 
 .button-74 {
+ 
   background-color: #fbeee0;
   border: 2px solid #422800;
+  width:25%;
+  height:7%;
   border-radius: 30px;
   box-shadow: #422800 4px 4px 0 0;
   color: #422800;
@@ -17,13 +20,14 @@ canvas {
   display: inline-block;
   font-weight: 600;
   font-size: 28px;
-  padding: 0 48px;
+  padding: 0px;
   line-height: 40px;
   text-align: center;
   text-decoration: none;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  
 }
 
 .button-74:hover {
@@ -40,4 +44,38 @@ canvas {
     min-width: 120px;
     padding: 0 25px;
   }
+}
+
+
+.button-13 {
+  background-color: #fff;
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  box-sizing: border-box;
+  color: #0f1111;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Amazon Ember",sans-serif;
+  font-size: 13px;
+  line-height: 29px;
+  padding: 0 10px 0 11px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 200px;
+}
+
+.button-13:hover {
+  background-color: #f7fafa;
+}
+
+.button-13:focus {
+  border-color: #008296;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  outline: 0;
 }
