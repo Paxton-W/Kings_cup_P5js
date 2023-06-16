@@ -94,38 +94,38 @@ function draw_drink_mate_lines() {
     fill(244, 127, 48);
     textStyle(BOLD);
     textSize(textSize_s);
-    text(friends_drink[i + 1], 40, height * 0.82 + i * 9);
+    text(friends_drink[i + 1], windowSize_base*40, height * 0.82 + i * 12*windowSize_base);
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
-    text(" needs to drink when ", 60 + friends_drink[i + 1].length * 13, height * 0.82 + i * 9);
+    text(" needs to drink when ", windowSize_base*60 + friends_drink[i + 1].length * 13*windowSize_base, height * 0.82 + i * 12*windowSize_base);
     textStyle(BOLD);
     textSize(textSize_s);
     fill(244, 127, 48);
-    text(friends_drink[i], 60 + 190 + friends_drink[i + 1].length * 13, height * 0.82 + i * 9);
+    text(friends_drink[i], 60*windowSize_base + 210*windowSize_base + friends_drink[i + 1].length * 13*windowSize_base, height * 0.82 + i * 12*windowSize_base);
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
-    text("drink", 60 + 190 + friends_drink[i + 1].length * 13 + friends_drink[i].length * 13, height * 0.82 + i * 9);
+    text("drink", 60*windowSize_base + 210*windowSize_base + friends_drink[i + 1].length * 13*windowSize_base + friends_drink[i].length * 13*windowSize_base, height * 0.82 + i * 12*windowSize_base);
     pop();
     push();
     rotate(PI);
     fill(244, 127, 48);
     textStyle(BOLD);
     textSize(textSize_s);
-    text(friends_drink[i + 1], -width + 40, -height * 0.18 + i * 9);
+    text(friends_drink[i + 1], -width + 40*windowSize_base, -height * 0.18 + i * 12*windowSize_base);
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
-    text(" needs to drink when ", -width + 60 + friends_drink[i + 1].length * 13, -height * 0.18 + i * 9);
+    text(" needs to drink when ", -width + 60*windowSize_base + friends_drink[i + 1].length * 13*windowSize_base, -height * 0.18 + i * 12*windowSize_base);
     textStyle(BOLD);
     textSize(textSize_s);
     fill(244, 127, 48);
-    text(friends_drink[i], -width + 60 + 190 + friends_drink[i + 1].length * 13, -height * 0.18 + i * 9);
+    text(friends_drink[i], -width + 60*windowSize_base + 210*windowSize_base + friends_drink[i + 1].length * 13*windowSize_base, -height * 0.18 + i * 12*windowSize_base);
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
-    text("drink", -width + 60 + 190 + friends_drink[i + 1].length * 13 + friends_drink[i].length * 20, -height * 0.18 + i * 9);
+    text("drink", -width + 60*windowSize_base + 210*windowSize_base + friends_drink[i + 1].length * 13*windowSize_base + friends_drink[i].length * 20*windowSize_base, -height * 0.18 + i * 12*windowSize_base);
     pop();
   }
   pop();
@@ -280,7 +280,7 @@ function draw_a_card() {
 
 
   //this line is only for testing
-  //currentNumber = 6;
+  currentNumber = 6;
   //currentNumber = int(random(6, 8));
 
   //random pick for case never ever and categories

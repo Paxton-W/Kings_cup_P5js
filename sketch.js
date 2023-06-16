@@ -56,7 +56,7 @@ function setup() {
     cards.push(i)
     cards.push(i)
   }
-  print(draw_button.width)
+  print(windowSize_base)
 }
 
 function draw() {
