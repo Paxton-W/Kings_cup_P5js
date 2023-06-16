@@ -280,7 +280,7 @@ function draw_a_card() {
 
 
   //this line is only for testing
-  currentNumber = 6;
+  //currentNumber = 6;
   //currentNumber = int(random(6, 8));
 
   //random pick for case never ever and categories
