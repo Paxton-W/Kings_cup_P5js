@@ -227,7 +227,7 @@ function friends_drink_record() {
   partnerNameInput.hide();
   button.hide();
   draw_button.show();
-  drew_timer = millis() + 2500;
+  drew_timer = millis() + 700;
   if (yourNameInput.value().length > 0) {
     friends_drink.push(yourNameInput.value());
   } else {
