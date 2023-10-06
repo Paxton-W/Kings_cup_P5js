@@ -57,6 +57,7 @@ function setup() {
     cards.push(i)
   }
   print(windowSize_base)
+  print(cards)
 }
 
 function draw() {
@@ -90,6 +91,8 @@ function draw() {
   draw_credit();
   //if draw 6
   draw_case_6_in_draw();
+
+  showCurrentCard()
 }
 
 function mousePressed() {
@@ -98,4 +101,10 @@ function mousePressed() {
 
 function touchStarted() {
   // draw_a_card()
+}
+
+
+
+function showCurrentCard() {
+  text(cards,20,20)
 }

@@ -47,6 +47,7 @@ function game_cases_switch() {
       currentText = "Everyone";
       if_new_change = false;
       center_e_clr = color(166, 188, 9);
+      currentDis = "Cheers!!!"
       break;
     case 9:
       currentText = "Rhyme Time";
