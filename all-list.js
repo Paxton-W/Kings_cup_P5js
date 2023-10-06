@@ -1,6 +1,6 @@
 let never_list = [];
 
-never_list =     `Never have I ever broken a bone.
+never_list = `Never have I ever broken a bone.
 Never have I ever Googled myself.
 Never have I ever seen a ghost.
 Never have I ever toilet-papered someone's house.
@@ -38,9 +38,35 @@ Never have I ever broken the law.
 Never have I ever been to a nude beach.
 Never have I ever given someone a fake phone number.
 Never have I ever lied to someone in this room.
-Never have I ever broken up with someone over text.`.split("\nNever have I ever ")
+Never have I ever broken up with someone over text.`.split("\nNever have I ever ");
 
-
-let categories_list = [];
-
-categories_list = 'Fruits, Holidays, Jungle animals, Sports, Transportation, School subjects, Currency,  Countries, Planets, Colours, Languages, Musical instruments, Musical genres, Things that fly, Things that swim'.split(", ")
+let categories_list = [
+  "Types of Fruit",
+  "Colors (one word only)",
+  "Dog Breeds",
+  "Pizza Toppings",
+  "Countries",
+  "Car Brands",
+  "Musical Instruments",
+  "Sports",
+  "Zodiac Signs",
+  "Flowers",
+  "Capital Cities",
+  "Ocean Animals",
+  "Vegetables",
+  "Musical Genres",
+  "Currencies",
+  "Disney Movies",
+  "National Holidays",
+  "Body Parts",
+  "Modes of Transportation",
+  "Types of Tea",
+  "Kitchen Appliances",
+  "Types of Coffee",
+  "Video Game Consoles",
+  "Parts of a Computer",
+  "Jungle animals",
+  "Languages",
+  "Things that fly",
+  "Things that swim",
+];
