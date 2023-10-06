@@ -16,6 +16,8 @@ let if_new_change = false;
 let friends_drink = [];
 let name1, name2;
 
+let card_has_drawed = false;
+
 let set_delays = -70;
 
 function background_control() {
@@ -94,38 +96,69 @@ function draw_drink_mate_lines() {
     fill(244, 127, 48);
     textStyle(BOLD);
     textSize(textSize_s);
-    text(friends_drink[i + 1], windowSize_base*40, height * 0.82 + i * 12*windowSize_base);
+    text(friends_drink[i + 1], windowSize_base * 40, height * 0.82 + i * 12 * windowSize_base);
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
-    text(" needs to drink when ", windowSize_base*60 + friends_drink[i + 1].length * 13*windowSize_base, height * 0.82 + i * 12*windowSize_base);
+    text(
+      " needs to drink when ",
+      windowSize_base * 60 + friends_drink[i + 1].length * 13 * windowSize_base,
+      height * 0.82 + i * 12 * windowSize_base
+    );
     textStyle(BOLD);
     textSize(textSize_s);
     fill(244, 127, 48);
-    text(friends_drink[i], 60*windowSize_base + 210*windowSize_base + friends_drink[i + 1].length * 13*windowSize_base, height * 0.82 + i * 12*windowSize_base);
+    text(
+      friends_drink[i],
+      60 * windowSize_base + 210 * windowSize_base + friends_drink[i + 1].length * 13 * windowSize_base,
+      height * 0.82 + i * 12 * windowSize_base
+    );
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
-    text("drink", 60*windowSize_base + 210*windowSize_base + friends_drink[i + 1].length * 13*windowSize_base + friends_drink[i].length * 13*windowSize_base, height * 0.82 + i * 12*windowSize_base);
+    text(
+      "drink",
+      60 * windowSize_base +
+        210 * windowSize_base +
+        friends_drink[i + 1].length * 13 * windowSize_base +
+        friends_drink[i].length * 13 * windowSize_base,
+      height * 0.82 + i * 12 * windowSize_base
+    );
     pop();
     push();
     rotate(PI);
     fill(244, 127, 48);
     textStyle(BOLD);
     textSize(textSize_s);
-    text(friends_drink[i + 1], -width + 40*windowSize_base, -height * 0.18 + i * 12*windowSize_base);
+    text(friends_drink[i + 1], -width + 40 * windowSize_base, -height * 0.18 + i * 12 * windowSize_base);
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
-    text(" needs to drink when ", -width + 60*windowSize_base + friends_drink[i + 1].length * 13*windowSize_base, -height * 0.18 + i * 12*windowSize_base);
+    text(
+      " needs to drink when ",
+      -width + 60 * windowSize_base + friends_drink[i + 1].length * 13 * windowSize_base,
+      -height * 0.18 + i * 12 * windowSize_base
+    );
     textStyle(BOLD);
     textSize(textSize_s);
     fill(244, 127, 48);
-    text(friends_drink[i], -width + 60*windowSize_base + 210*windowSize_base + friends_drink[i + 1].length * 13*windowSize_base, -height * 0.18 + i * 12*windowSize_base);
+    text(
+      friends_drink[i],
+      -width + 60 * windowSize_base + 210 * windowSize_base + friends_drink[i + 1].length * 13 * windowSize_base,
+      -height * 0.18 + i * 12 * windowSize_base
+    );
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
-    text("drink", -width + 60*windowSize_base + 210*windowSize_base + friends_drink[i + 1].length * 13*windowSize_base + friends_drink[i].length * 20*windowSize_base, -height * 0.18 + i * 12*windowSize_base);
+    text(
+      "drink",
+      -width +
+        60 * windowSize_base +
+        210 * windowSize_base +
+        friends_drink[i + 1].length * 13 * windowSize_base +
+        friends_drink[i].length * 20 * windowSize_base,
+      -height * 0.18 + i * 12 * windowSize_base
+    );
     pop();
   }
   pop();
@@ -246,8 +279,86 @@ function draw_case_6_in_draw() {
     // button.hide();
   }
 }
+function showCurrentCard() {
+  if (card_has_drawed) {
+    card_1 = card_2 = card_3 = card_4 = card_5 = card_6 = card_7 = card_8 = card_9 = card_10 = card_11 = card_12 = card_13 = 0;
+    for (c = 0; c < cards.length; c++) {
+      switch (cards[c]) {
+        case 1:
+          card_1++;
+          break;
+        case 2:
+          card_2++;
+          break;
+        case 3:
+          card_3++;
+          break;
+        case 4:
+          card_4++;
+          break;
+        case 5:
+          card_5++;
+          break;
+        case 6:
+          card_6++;
+          break;
+        case 7:
+          card_7++;
+          break;
+        case 8:
+          card_8++;
+          break;
+        case 9:
+          card_9++;
+          break;
+        case 10:
+          card_10++;
+          break;
+        case 11:
+          card_11++;
+          break;
+        case 12:
+          card_12++;
+          break;
+        case 13:
+          card_13++;
+          break;
+        default:
+          // Handle default case (if needed)
+          break;
+      }
+    }
+    cur_card_count = [card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13];
+    print(card_13);
+    card_has_drawed = false;
+  }
+
+  for (w = 0; w < card_ls.length; w++) {
+    push();
+    textAlign(CENTER)
+    noStroke();
+    fill(255);
+    translate(40 + w * 25, 30);
+    text(card_ls[w], 0, 0);
+    noFill();
+    stroke(255);
+    strokeWeight(3);
+    translate(0.2, -3.6);
+    if (cur_card_count[w] == 4) {
+      arc(0, 0, 20, 20, -HALF_PI, PI + HALF_PI);
+    } else if (cur_card_count[w] == 3) {
+      arc(0, 0, 20, 20, -HALF_PI, PI);
+    } else if (cur_card_count[w] == 2) {
+      arc(0, 0, 20, 20, -HALF_PI, HALF_PI);
+    } else if (cur_card_count[w] == 1) {
+      arc(0, 0, 20, 20, -HALF_PI, 0);
+    }
+    pop();
+  }
+}
+
 let drew_timer = 0;
-let new_num = 0
+let new_num = 0;
 
 function draw_a_card() {
   if (draw_case_6) {
@@ -256,7 +367,7 @@ function draw_a_card() {
   if (game_over) {
     return;
   }
-  if (millis() - drew_timer < 700) {
+  if (millis() - drew_timer < 500) {
     return;
   }
   drew_timer = millis();
@@ -268,16 +379,16 @@ function draw_a_card() {
 
   //pick a random number
 
-  
-    let n = int(random(cards.length))
-    currentNumber = cards[n]
-    cards.splice(n, 1)
-    print(cards)
-  
+  let n = int(random(cards.length));
+  while (cards[n] == currentNumber) {
+    n = int(random(cards.length));
+  }
+  currentNumber = cards[n];
+  cards.splice(n, 1);
+  print(cards);
+
   // currentNumber = random(cards)
   // new_num = int(random(1, 14));
-
-
 
   //this line is only for testing
   //currentNumber = 6;
@@ -291,6 +402,8 @@ function draw_a_card() {
   //help debuging
   if_new_change = true;
 
+  //display current cards left
+  card_has_drawed = true;
   //set the delay in case6
   //count the kings cup times
   switch (currentNumber) {

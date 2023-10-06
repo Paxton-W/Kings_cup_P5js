@@ -10,8 +10,11 @@ let textSize_l;
 let textSize_x;
 let bk_color;
 let screen_rotate;
+let card_1 = card_2 = card_3 = card_4 = card_5 = card_6 = card_7 = card_8 = card_9 = card_10 = card_11 = card_12 = card_13 = 4
+let card_ls = "A-2-3-4-5-6-7-8-9-10-J-Q-K".split("-");
+let cur_card_count = [card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13];
 
-let cards = []
+let cards = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
   font_1 = loadFont("assets/LilitaOne-Regular.ttf");
@@ -28,7 +31,7 @@ function setup() {
   button.hide();
   draw_button = createButton("^");
   //note width is not responsed
-  draw_button.position(width / 2-width*0.125, height * 0.53);
+  draw_button.position(width / 2 - width * 0.125, height * 0.53);
   draw_button.mousePressed(draw_a_card);
   draw_button.addClass("button-74");
 
@@ -50,13 +53,13 @@ function setup() {
   // print(windowSize_base);
   textFont(font_1);
 
-  for (i = 1; i <= 13; i++){
-    cards.push(i)
-    cards.push(i)
-    cards.push(i)
-    cards.push(i)
+  for (i = 1; i <= 13; i++) {
+    cards.push(i);
+    cards.push(i);
+    cards.push(i);
+    cards.push(i);
   }
-  print(windowSize_base)
+  print(windowSize_base);
 }
 
 function draw() {
@@ -90,6 +93,8 @@ function draw() {
   draw_credit();
   //if draw 6
   draw_case_6_in_draw();
+
+  showCurrentCard();
 }
 
 function mousePressed() {
@@ -99,3 +104,4 @@ function mousePressed() {
 function touchStarted() {
   // draw_a_card()
 }
+
