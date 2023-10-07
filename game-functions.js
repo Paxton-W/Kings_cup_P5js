@@ -40,7 +40,7 @@ function draw_credit() {
   text("Drinking Game", width * 0.05, height - 4);
   textSize(textSize_s);
   text("By Paxton", width * 0.35, height - 4);
-  text("ver.2.0", width * 0.8, height - 4);
+  text("ver.2.1", width * 0.8, height - 4);
   text("King : " + king_cup_times, width * 0.6, height - 4);
   textAlign(CENTER);
   textSize(textSize_s);
