@@ -22,15 +22,15 @@ let set_delays = -70;
 
 function background_control() {
   background(bk_color);
-  if (bg_clr.r > 0) {
-    bg_clr.r -= 9;
-  }
-  if (bg_clr.g > 53) {
-    bg_clr.g -= 9;
-  }
-  if (bg_clr.b > 89) {
-    bg_clr.b -= 3;
-  }
+  // if (bg_clr.r > 0) {
+  //   bg_clr.r -= 9;
+  // }
+  // if (bg_clr.g > 53) {
+  //   bg_clr.g -= 9;
+  // }
+  // if (bg_clr.b > 89) {
+  //   bg_clr.b -= 3;
+  // }
 }
 
 function draw_credit() {
@@ -329,13 +329,13 @@ function showCurrentCard() {
       }
     }
     cur_card_count = [card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13];
-    print(card_13);
+
     card_has_drawed = false;
   }
 
   for (w = 0; w < card_ls.length; w++) {
     push();
-    textAlign(CENTER)
+    textAlign(CENTER);
     noStroke();
     fill(255);
     translate(40 + w * 25, 30);
@@ -357,8 +357,9 @@ function showCurrentCard() {
   }
 }
 
-let drew_timer = 0;
+let drew_timer = -1001;
 let new_num = 0;
+let draw_card_run = false;
 
 function draw_a_card() {
   if (draw_case_6) {
@@ -367,10 +368,29 @@ function draw_a_card() {
   if (game_over) {
     return;
   }
-  if (millis() - drew_timer < 500) {
+  if (millis() - drew_timer < 2000) {
     return;
   }
   drew_timer = millis();
+  drawsound.stop();
+  //hitsound2.stop();
+  draw_card_run = true;
+  drawsound.play();
+}
+
+function draw_a_card_run() {
+  print(millis() - drew_timer);
+  if (!draw_card_run) {
+    return;
+  }
+  if (millis() - drew_timer > 1500) {
+    return;
+  } else if (millis() - drew_timer < 1000) {
+
+    return
+  }
+
+  // drew_timer = millis();
   hitsound2.stop();
   //set background brighter when touch the screen
   bg_clr.r = 244;
@@ -385,7 +405,6 @@ function draw_a_card() {
   }
   currentNumber = cards[n];
   cards.splice(n, 1);
-  print(cards);
 
   // currentNumber = random(cards)
   // new_num = int(random(1, 14));
@@ -421,5 +440,7 @@ function draw_a_card() {
 
   //play the hitting sound
   //sound pre load is in sound-effects.js
-  hitsound2.play();
+  //hitsound2.play();
+
+  drew_timer -= 510;
 }

@@ -94,6 +94,8 @@ function draw() {
   //if draw 6
   draw_case_6_in_draw();
 
+  draw_a_card_run()
+  
   showCurrentCard();
 }
 
