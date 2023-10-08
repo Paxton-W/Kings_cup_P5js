@@ -59,7 +59,7 @@ function setup() {
     cards.push(i);
     cards.push(i);
   }
-  print(windowSize_base);
+  //print(windowSize_base);
 }
 
 function draw() {
@@ -95,7 +95,7 @@ function draw() {
   draw_case_6_in_draw();
 
   draw_a_card_run()
-  
+
   showCurrentCard();
 }
 
