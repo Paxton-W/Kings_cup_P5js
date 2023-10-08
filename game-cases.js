@@ -21,19 +21,19 @@ function game_cases_switch() {
       break;
     case 4:
       currentText = "Four is Girls";
-      currentDis = "n"
+      currentDis = null
       if_new_change = false;
       center_e_clr = color(242, 102, 139);
       break;
     case 5:
       currentText = "Five is Guys";
-      currentDis = "n"
+      currentDis = null
       if_new_change = false;
       center_e_clr = color(0, 153, 221);
       break;
     case 6:
       currentText = "Select\n a Mate";
-      currentDis = "n"
+      currentDis = null
       if_case_6 = true;
       center_e_clr = color(4, 191, 157);
       break;

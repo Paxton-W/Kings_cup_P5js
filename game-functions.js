@@ -1,6 +1,6 @@
 let currentNumber = 0;
 let currentText;
-let currentDis = "n";
+let currentDis = false;
 let bg_clr = { r: 14, g: 93, b: 124 };
 
 let desc_wd_x = 50;
@@ -182,7 +182,7 @@ function draw_current_task() {
   text(currentText, -height / 2, width * 0.8);
   pop();
 
-  if (currentDis.length > 2) {
+  if (currentDis) {
     push();
     fill(200);
     textSize(textSize_s);
@@ -227,7 +227,7 @@ function friends_drink_record() {
   partnerNameInput.hide();
   button.hide();
   draw_button.show();
-  drew_timer = millis() + 700;
+  // drew_timer = millis() + 700;
   if (yourNameInput.value().length > 0) {
     friends_drink.push(yourNameInput.value());
   } else {
@@ -379,14 +379,15 @@ function draw_a_card() {
 }
 
 function draw_a_card_run() {
-  print(millis() - drew_timer);
+  
   if (!draw_card_run) {
     return;
   }
   if (millis() - drew_timer > 1500) {
+    
     return;
   } else if (millis() - drew_timer < 1000) {
-
+    currentNumber = int(random(1,13))
     return
   }
 
