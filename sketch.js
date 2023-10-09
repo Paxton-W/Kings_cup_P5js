@@ -106,3 +106,9 @@ function mousePressed() {
 function touchStarted() {
   // draw_a_card()
 }
+
+function keyPressed() {
+  if (keyCode == 32) {
+    draw_a_card() 
+  }
+}

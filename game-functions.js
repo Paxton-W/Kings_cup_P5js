@@ -384,10 +384,11 @@ function draw_a_card_run() {
     return;
   }
   if (millis() - drew_timer > 1500) {
-    
+    draw_a_card() 
     return;
   } else if (millis() - drew_timer < 1000) {
-    currentNumber = int(random(1,13))
+    currentNumber = int(random(1, 13.5))
+    print(currentNumber)
     return
   }
 
