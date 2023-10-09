@@ -17,6 +17,7 @@ let friends_drink = [];
 let name1, name2;
 
 let card_has_drawed = false;
+let lastNumber = 0;
 
 let set_delays = -70;
 
@@ -40,7 +41,7 @@ function draw_credit() {
   text("Drinking Game", width * 0.05, height - 4);
   textSize(textSize_s);
   text("By Paxton", width * 0.35, height - 4);
-  text("ver.2.2", width * 0.8, height - 4);
+  text("ver.2.3", width * 0.8, height - 4);
   text("King : " + king_cup_times, width * 0.6, height - 4);
   textAlign(CENTER);
   textSize(textSize_s);
@@ -84,7 +85,22 @@ function draw_center_items() {
   fill(255);
   textSize(textSize_l);
   textAlign(CENTER);
-  text(currentNumber, width / 2, height * 0.47);
+  if (currentNumber > 10) {
+    switch (currentNumber) {
+      case 11:
+        text("J", width / 2, height * 0.47);
+        break;
+      case 12:
+        text("Q", width / 2, height * 0.47);
+        break;
+      case 13:
+        text("K", width / 2, height * 0.47);
+        break;
+    }
+  } else {
+    text(currentNumber, width / 2, height * 0.47);
+  }
+  
   pop();
 }
 
@@ -383,12 +399,15 @@ function draw_a_card_run() {
   if (!draw_card_run) {
     return;
   }
+  
   if (millis() - drew_timer > 1500) {
-    draw_a_card() 
+     //draw_a_card() 
     return;
   } else if (millis() - drew_timer < 1000) {
-    currentNumber = int(random(1, 13.5))
-    print(currentNumber)
+
+      currentNumber = int(random(1, 13.9))
+
+    
     return
   }
 
@@ -402,17 +421,18 @@ function draw_a_card_run() {
   //pick a random number
 
   let n = int(random(cards.length));
-  while (cards[n] == currentNumber) {
+  while (cards[n] == lastNumber && lastNumber !== 13) {
     n = int(random(cards.length));
+    print("same")
   }
   currentNumber = cards[n];
   cards.splice(n, 1);
-
+  lastNumber = currentNumber
   // currentNumber = random(cards)
   // new_num = int(random(1, 14));
 
   //this line is only for testing
-  //currentNumber = 6;
+  //currentNumber = 13;
   //currentNumber = int(random(6, 8));
 
   //random pick for case never ever and categories

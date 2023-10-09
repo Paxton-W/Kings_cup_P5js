@@ -72,7 +72,10 @@ function draw() {
     return;
   }
   if (game_over) {
-    draw_button.mousePressed(reload());
+    if (mouseIsPressed) {
+      draw_button.mousePressed(location.reload());
+    }
+    
     return;
   }
   //all functions are in game-functions.js except few
@@ -109,7 +112,5 @@ function touchStarted() {
 }
 
 function keyPressed() {
-  if (keyCode == 32) {
-    reload()
-  }
+  
 }
