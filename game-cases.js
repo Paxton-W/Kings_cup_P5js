@@ -50,10 +50,10 @@ function game_cases_switch() {
       currentDis = "Cheers!!!";
       break;
     case 9:
-      currentText = "Rhyme Time";
+      currentText = "Reverse";
       if_new_change = false;
       center_e_clr = color(140, 31, 40);
-      currentDis = "Think more than\n3 seconds drinks";
+      currentDis = "The direction of play is reversed";
       break;
     case 10:
       currentText = "Categories";

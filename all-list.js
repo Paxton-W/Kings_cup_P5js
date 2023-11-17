@@ -48,8 +48,8 @@ let categories_list = [
   "Countries",
   "Car Brands",
   "Musical Instruments",
-  "Sports",
-  "Zodiac Signs",
+  "Winter Sports",
+  "Zodiac (Star) Signs",
   "Flowers",
   "Capital Cities",
   "Ocean Animals",
@@ -58,7 +58,6 @@ let categories_list = [
   "Currencies",
   "Disney Movies",
   "National Holidays",
-  "Body Parts",
   "Modes of Transportation",
   "Types of Tea",
   "Kitchen Appliances",
@@ -69,4 +68,8 @@ let categories_list = [
   "Languages",
   "Things that fly",
   "Things that swim",
+  "Coding language",
+  "Bank Names",
+  "Fast Food Chain",
+  ""
 ];
