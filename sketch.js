@@ -19,7 +19,7 @@ let cvs;
 let cards = [];
 function setup() {
   cvs = createCanvas(windowWidth, windowHeight);
-  cnv.id("mainCanvas");
+  cvs.id("mainCanvas");
   refocus_myself();
   font_1 = loadFont("assets/LilitaOne-Regular.ttf");
   bk_color = color(random(50, 150), random(50, 150), random(50, 150));
