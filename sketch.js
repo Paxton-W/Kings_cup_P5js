@@ -14,9 +14,12 @@ let card_1 = (card_2 = card_3 = card_4 = card_5 = card_6 = card_7 = card_8 = car
 let card_ls = "A-2-3-4-5-6-7-8-9-10-J-Q-K".split("-");
 let cur_card_count = [card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13];
 
+let cvs;
 let cards = [];
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  cvs = createCanvas(windowWidth, windowHeight);
+  cnv.id("mainCanvas");
+  refocus_myself();
   font_1 = loadFont("assets/LilitaOne-Regular.ttf");
   bk_color = color(random(50, 150), random(50, 150), random(50, 150));
   center_e_clr = color(255, 50);
@@ -75,7 +78,7 @@ function draw() {
     if (mouseIsPressed) {
       draw_button.mousePressed(location.reload());
     }
-    
+
     return;
   }
   //all functions are in game-functions.js except few
@@ -111,6 +114,10 @@ function touchStarted() {
   // draw_a_card()
 }
 
-function keyPressed() {
-  
+function keyPressed() {}
+
+function refocus_myself() {
+  var c = document.getElementById("mainCanvas");
+  c.setAttribute("tabindex", "0");
+  c.focus();
 }
