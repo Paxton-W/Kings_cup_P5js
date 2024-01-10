@@ -117,6 +117,8 @@ function touchStarted() {
 
 function keyPressed() {}
 
+
+//for itch, fix the bug on inputs(button, text, input)
 function refocus_myself() {
   var c = document.getElementById("mainCanvas");
   c.setAttribute("tabindex", "0");
