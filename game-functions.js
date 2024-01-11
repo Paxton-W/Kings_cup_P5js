@@ -100,45 +100,42 @@ function draw_center_items() {
   } else {
     text(currentNumber, width / 2, height * 0.47);
   }
-  
+
   pop();
 }
+let linegap = 14;
 
 function draw_drink_mate_lines() {
+  let mate_x_1 = windowSize_base * 40;
+  let mate_x_2 = textSize_s * 0.5;
   push();
+  textFont(font_2);
   fill(255);
   for (let i = 0; i < friends_drink.length - 1; i += 2) {
     push();
     fill(244, 127, 48);
     textStyle(BOLD);
     textSize(textSize_s);
-    text(friends_drink[i + 1], windowSize_base * 40, height * 0.82 + i * 12 * windowSize_base);
+    text(friends_drink[i + 1], mate_x_1, height * 0.82 + i * linegap * windowSize_base);
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
-    text(
-      " needs to drink when ",
-      windowSize_base * 60 + friends_drink[i + 1].length * 13 * windowSize_base,
-      height * 0.82 + i * 12 * windowSize_base
-    );
+    text("needs to drink when", mate_x_1 * 1.5 + friends_drink[i + 1].length * mate_x_2, height * 0.82 + i * linegap * windowSize_base);
     textStyle(BOLD);
     textSize(textSize_s);
     fill(244, 127, 48);
     text(
       friends_drink[i],
-      60 * windowSize_base + 210 * windowSize_base + friends_drink[i + 1].length * 13 * windowSize_base,
-      height * 0.82 + i * 12 * windowSize_base
+      mate_x_1 * 1.5 + friends_drink[i + 1].length * mate_x_2 + mate_x_2 * 21,
+      height * 0.82 + i * linegap * windowSize_base
     );
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
     text(
       "drink",
-      60 * windowSize_base +
-        210 * windowSize_base +
-        friends_drink[i + 1].length * 13 * windowSize_base +
-        friends_drink[i].length * 13 * windowSize_base,
-      height * 0.82 + i * 12 * windowSize_base
+      mate_x_1 * 2 + friends_drink[i + 1].length * mate_x_2 + mate_x_2 * 21 + friends_drink[i].length * mate_x_2,
+      height * 0.82 + i * linegap * windowSize_base
     );
     pop();
     push();
@@ -146,34 +143,30 @@ function draw_drink_mate_lines() {
     fill(244, 127, 48);
     textStyle(BOLD);
     textSize(textSize_s);
-    text(friends_drink[i + 1], -width + 40 * windowSize_base, -height * 0.18 + i * 12 * windowSize_base);
+    text(friends_drink[i + 1], -width + mate_x_1, -height * 0.18 + i * linegap * windowSize_base);
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
     text(
-      " needs to drink when ",
+      "needs to drink when",
       -width + 60 * windowSize_base + friends_drink[i + 1].length * 13 * windowSize_base,
-      -height * 0.18 + i * 12 * windowSize_base
+      -height * 0.18 + i * linegap * windowSize_base
     );
     textStyle(BOLD);
     textSize(textSize_s);
     fill(244, 127, 48);
     text(
       friends_drink[i],
-      -width + 60 * windowSize_base + 210 * windowSize_base + friends_drink[i + 1].length * 13 * windowSize_base,
-      -height * 0.18 + i * 12 * windowSize_base
+      -width + mate_x_1 * 1.5 + friends_drink[i + 1].length * mate_x_2 + mate_x_2 * 21,
+      -height * 0.18 + i * linegap * windowSize_base
     );
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
     text(
       "drink",
-      -width +
-        60 * windowSize_base +
-        210 * windowSize_base +
-        friends_drink[i + 1].length * 13 * windowSize_base +
-        friends_drink[i].length * 20 * windowSize_base,
-      -height * 0.18 + i * 12 * windowSize_base
+      -width + mate_x_1 * 2 + friends_drink[i + 1].length * mate_x_2 + mate_x_2 * 21 + friends_drink[i].length * mate_x_2,
+      -height * 0.18 + i * linegap * windowSize_base
     );
     pop();
   }
@@ -183,37 +176,39 @@ function draw_drink_mate_lines() {
 function draw_current_task() {
   push();
   fill(255);
-  textSize(textSize_base);
+  textSize(textSize_xl);
+  width > 500 && textSize(textSize_base);
   textAlign(CENTER);
 
   text(currentText, width / 2, height * 0.67);
 
   rotate(PI / 2);
-  text(currentText, height / 2, -width * 0.2);
+  width > 500 && text(currentText, height / 2, -width * 0.2);
 
   rotate(PI / 2);
   text(currentText, -width / 2, -height * 0.33);
 
   rotate(PI / 2);
-  text(currentText, -height / 2, width * 0.8);
+  width > 500 && text(currentText, -height / 2, width * 0.8);
   pop();
 
   if (currentDis) {
     push();
     fill(200);
-    textSize(textSize_s);
+    textSize(textSize_m);
+    width > 500 && textSize(textSize_s);
     textAlign(CENTER);
 
     text(currentDis, width / 2, height * 0.7);
 
     rotate(PI / 2);
-    text(currentDis, height / 2, -width * 0.15);
+    width > 500 && text(currentDis, height / 2, -width * 0.15);
 
     rotate(PI / 2);
     text(currentDis, -width / 2, -height * 0.3);
 
     rotate(PI / 2);
-    text(currentDis, -height / 2, width * 0.85);
+    width > 500 && text(currentDis, -height / 2, width * 0.85);
     pop();
   }
 }
@@ -395,20 +390,17 @@ function draw_a_card() {
 }
 
 function draw_a_card_run() {
-  
   if (!draw_card_run) {
     return;
   }
-  
+
   if (millis() - drew_timer > 1500) {
-     //draw_a_card() 
+    //draw_a_card()
     return;
   } else if (millis() - drew_timer < 1000) {
+    currentNumber = int(random(1, 13.9));
 
-      currentNumber = int(random(1, 13.9))
-
-    
-    return
+    return;
   }
 
   // drew_timer = millis();
@@ -423,16 +415,16 @@ function draw_a_card_run() {
   let n = int(random(cards.length));
   while (cards[n] == lastNumber && lastNumber !== 13) {
     n = int(random(cards.length));
-    print("same")
+    print("same");
   }
   currentNumber = cards[n];
   cards.splice(n, 1);
-  lastNumber = currentNumber
+  lastNumber = currentNumber;
   // currentNumber = random(cards)
   // new_num = int(random(1, 14));
 
   //this line is only for testing
-  //currentNumber = 13;
+  //currentNumber = 6;
   //currentNumber = int(random(6, 8));
 
   //random pick for case never ever and categories

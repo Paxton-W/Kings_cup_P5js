@@ -7,6 +7,7 @@ let textSize_base;
 let textSize_s;
 let textSize_m;
 let textSize_l;
+let textSize_xl;
 let textSize_x;
 let bk_color;
 let screen_rotate;
@@ -17,11 +18,14 @@ let card_ls = "A-2-3-4-5-6-7-8-9-10-J-Q-K".split("-");
 let cur_card_count = [card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13];
 let cvs;
 let cards = [];
+let font_1, font_2;
+
 function setup() {
   cvs = createCanvas(windowWidth, windowHeight);
   cvs.id("mainCanvas");
   refocus_myself();
   font_1 = loadFont("assets/LilitaOne-Regular.ttf");
+  font_2 = loadFont("assets/ShareTechMono-Regular.ttf");
   bk_color = color(random(50, 150), random(50, 150), random(50, 150));
   center_e_clr = color(255, 50);
   yourNameInput = createInput("Jerry", "text");
@@ -48,10 +52,11 @@ function setup() {
     screen_rotate = "landscape";
   }
 
-  textSize_s = windowSize_base * 22;
+  textSize_s = windowSize_base * 32;
   textSize_base = windowSize_base * 53;
   textSize_m = windowSize_base * 37;
   textSize_l = windowSize_base * 65;
+  textSize_xl = windowSize_base * 85;
   textSize_x = windowSize_base * 500;
   // print(width + "," + height);
   // print(windowSize_base);
@@ -116,7 +121,6 @@ function touchStarted() {
 }
 
 function keyPressed() {}
-
 
 //for itch, fix the bug on inputs(button, text, input)
 function refocus_myself() {
