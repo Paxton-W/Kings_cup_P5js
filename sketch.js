@@ -13,12 +13,41 @@ let bk_color;
 let screen_rotate;
 let card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13;
 const initialValue = 4;
-card_1 = card_2 = card_3 = card_4 = card_5 = card_6 = card_7 = card_8 = card_9 = card_10 = card_11 = card_12 = card_13 = initialValue;
+card_1 =
+  card_2 =
+  card_3 =
+  card_4 =
+  card_5 =
+  card_6 =
+  card_7 =
+  card_8 =
+  card_9 =
+  card_10 =
+  card_11 =
+  card_12 =
+  card_13 =
+    initialValue;
 let card_ls = "A-2-3-4-5-6-7-8-9-10-J-Q-K".split("-");
-let cur_card_count = [card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13];
+let cur_card_count = [
+  card_1,
+  card_2,
+  card_3,
+  card_4,
+  card_5,
+  card_6,
+  card_7,
+  card_8,
+  card_9,
+  card_10,
+  card_11,
+  card_12,
+  card_13,
+];
 let cvs;
 let cards = [];
 let font_1, font_2;
+
+let gamePage = "load";
 
 function setup() {
   cvs = createCanvas(windowWidth, windowHeight);
@@ -69,6 +98,7 @@ function setup() {
     cards.push(i);
   }
   //print(windowSize_base);
+  gamePage = "welcome";
 }
 
 function draw() {
