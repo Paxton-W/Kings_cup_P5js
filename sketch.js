@@ -479,8 +479,8 @@ function mousePressed() {
     draw_a_card();
   }
 }
-function touchStarted() {}
-function keyPressed() {}
+// function touchStarted() {}
+// function keyPressed() {}
 
 function windowResized() {
   var pe = document.getElementById("p5-cvs-container");
