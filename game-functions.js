@@ -103,6 +103,7 @@ function draw_center_items() {
 
   pop();
 }
+
 let linegap = 14;
 
 function draw_drink_mate_lines() {
@@ -120,7 +121,11 @@ function draw_drink_mate_lines() {
     textStyle(ITALIC);
     textSize(textSize_s);
     fill(237, 164, 116);
-    text("needs to drink when", mate_x_1 * 1.5 + friends_drink[i + 1].length * mate_x_2, height * 0.82 + i * linegap * windowSize_base);
+    text(
+      "needs to drink when",
+      mate_x_1 * 1.5 + friends_drink[i + 1].length * mate_x_2,
+      height * 0.82 + i * linegap * windowSize_base
+    );
     textStyle(BOLD);
     textSize(textSize_s);
     fill(244, 127, 48);
@@ -165,7 +170,11 @@ function draw_drink_mate_lines() {
     fill(237, 164, 116);
     text(
       "drink",
-      -width + mate_x_1 * 2 + friends_drink[i + 1].length * mate_x_2 + mate_x_2 * 21 + friends_drink[i].length * mate_x_2,
+      -width +
+        mate_x_1 * 2 +
+        friends_drink[i + 1].length * mate_x_2 +
+        mate_x_2 * 21 +
+        friends_drink[i].length * mate_x_2,
       -height * 0.18 + i * linegap * windowSize_base
     );
     pop();
@@ -292,7 +301,20 @@ function draw_case_6_in_draw() {
 }
 function showCurrentCard() {
   if (card_has_drawed) {
-    card_1 = card_2 = card_3 = card_4 = card_5 = card_6 = card_7 = card_8 = card_9 = card_10 = card_11 = card_12 = card_13 = 0;
+    card_1 =
+      card_2 =
+      card_3 =
+      card_4 =
+      card_5 =
+      card_6 =
+      card_7 =
+      card_8 =
+      card_9 =
+      card_10 =
+      card_11 =
+      card_12 =
+      card_13 =
+        0;
     for (c = 0; c < cards.length; c++) {
       switch (cards[c]) {
         case 1:
@@ -339,7 +361,21 @@ function showCurrentCard() {
           break;
       }
     }
-    cur_card_count = [card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13];
+    cur_card_count = [
+      card_1,
+      card_2,
+      card_3,
+      card_4,
+      card_5,
+      card_6,
+      card_7,
+      card_8,
+      card_9,
+      card_10,
+      card_11,
+      card_12,
+      card_13,
+    ];
 
     card_has_drawed = false;
   }
@@ -383,45 +419,39 @@ function draw_a_card() {
     return;
   }
   drew_timer = millis();
-  drawsound.stop();
+  // drawsound.stop();
   //hitsound2.stop();
-  draw_card_run = true;
-  drawsound.play();
+  // draw_card_run = true;
+  // drawsound.play();
+  gamePage = "pick";
 }
 
 function draw_a_card_run() {
   if (!draw_card_run) {
     return;
   }
-
+  //tap too close return
   if (millis() - drew_timer > 1500) {
     //draw_a_card()
     return;
   } else if (millis() - drew_timer < 1000) {
+    //in 1 sec, play the animation of shuffling the cards
     currentNumber = int(random(1, 13.9));
-
     return;
   }
-
-  // drew_timer = millis();
+  //stop the sound
   hitsound2.stop();
-  //set background brighter when touch the screen
-  bg_clr.r = 244;
-  bg_clr.g = 238;
-  bg_clr.b = 173;
-
   //pick a random number
-
   let n = int(random(cards.length));
+  //find if is same as previous, if so, pick again
   while (cards[n] == lastNumber && lastNumber !== 13) {
     n = int(random(cards.length));
     print("same");
   }
+  //remove the card from pale
   currentNumber = cards[n];
   cards.splice(n, 1);
   lastNumber = currentNumber;
-  // currentNumber = random(cards)
-  // new_num = int(random(1, 14));
 
   //this line is only for testing
   //currentNumber = 6;
@@ -451,10 +481,6 @@ function draw_a_card_run() {
       king_cup_times++;
       break;
   }
-
-  //play the hitting sound
-  //sound pre load is in sound-effects.js
-  //hitsound2.play();
 
   drew_timer -= 510;
 }
