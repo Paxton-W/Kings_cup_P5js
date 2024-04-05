@@ -72,11 +72,12 @@ let keyboard_2_input = "";
 let showMateKeyboard = false;
 //mate display
 let mateDisplay = [];
-
+//never generate
+let cur_never_ever = "";
 let gamePage = "load";
 //load, welcome, set, play, pick, mate, gameover
 // set the sound effect
-
+let s_filp, s_pick;
 let hitsound2, winsound, drawsound;
 let currentIndex;
 let pickAniTimer;
@@ -84,6 +85,8 @@ function preload() {
   font_1 = loadFont("assets/LilitaOne-Regular.ttf");
   font_2 = loadFont("assets/ShareTechMono-Regular.ttf");
   soundFormats("wav");
+  s_filp = loadSound("assets/filp");
+  s_pick = loadSound("assets/pick");
   hitsound2 = loadSound("assets/chillhit");
   winsound = loadSound("assets/Horn");
   drawsound = loadSound("assets/draw");
@@ -124,9 +127,9 @@ function setup() {
   textSize_s = windowSize_base * 28;
   textSize_base = windowSize_base * 53;
   textSize_m = windowSize_base * 30;
-  textSize_l = windowSize_base * 65;
+  textSize_l = windowSize_base * 70;
   textSize_xl = windowSize_base * 85;
-  textSize_x = windowSize_base * 500;
+  textSize_x = windowSize_base * 300;
   // print(width + "," + height);
   // print(windowSize_base);
 
@@ -161,7 +164,8 @@ function setup() {
   //keyboard 1  button
   alphabet.forEach((a, index) => {
     createAButton("key_1_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.3, undefined, 0.5, () => {
-      keyboard_1_input += a;
+      keyboard_1_input = a;
+      // keyboard_1_input += a;
     });
   });
   //keyboard 1 clear button
@@ -171,7 +175,8 @@ function setup() {
   //keyboard 2 button
   alphabet.forEach((a, index) => {
     createAButton("key_2_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.6, undefined, 0.5, () => {
-      keyboard_2_input += a;
+      keyboard_2_input = a;
+      // keyboard_2_input += a;
     });
   });
   //keyboard 2 clear button
@@ -180,8 +185,7 @@ function setup() {
   });
   //submit button
   createAButton("mate_submit", "Submit", 0.5, 0.95, undefined, 1.8, () => {
-    //sunmit mate code goes here
-    gamePage = "play";
+    //submit mate code goes here
     mateDisplay.push({ host: keyboard_1_input, mate: keyboard_2_input });
     keyboard_1_input = "";
     keyboard_2_input = "";
@@ -196,12 +200,26 @@ function setup() {
     btns.mate_submit.hide();
     showMateKeyboard = false;
     // btns.draw_button.show();
+    gamePage = "play";
+    drew_timer = millis();
+  });
+  //never have i ever question button
+  createAButton("never_ever_ques", "Generate", 0.3, 0.95, 1.3, undefined, () => {
+    //code goes here
+    cur_never_ever = random(never_list);
+  });
+  createAButton("never_ever_finish", "Next player", 0.7, 0.95, 1.3, 1.3, () => {
+    //code goes here
+    btns.never_ever_ques.hide();
+    btns.never_ever_finish.hide();
+    gamePage = "play";
   });
 
   btns.welcome_play.show();
   //set game status
   gamePage = "welcome";
   textFont(font_1);
+  s_filp.rate(4);
 }
 
 function draw() {
@@ -215,12 +233,12 @@ function draw() {
     pop();
     return;
   }
-  if (game_over) {
-    if (mouseIsPressed) {
-      draw_button.mousePressed(location.reload());
-    }
-    return;
-  }
+  // if (game_over) {
+  //   if (mouseIsPressed) {
+  //     draw_button.mousePressed(location.reload());
+  //   }
+  //   return;
+  // }
   //all functions are in game-functions.js except few
   let aniTimer = millis() - pickAniTimer;
   //change background when hit the screen
@@ -234,9 +252,9 @@ function draw() {
     push();
     fill(uiClr.t1);
     textAlign(CENTER);
-    textSize(50);
+    textSize(textSize_l);
     text("King's  Cup", width / 2, height * 0.3);
-    textSize(20);
+    textSize(textSize_s);
     fill(uiClr.t3);
     text("Drinking Party Game", width / 2, height * 0.35);
     pop();
@@ -271,7 +289,9 @@ function draw() {
       translate(cshow_x + cshow_x_offset, card.display.y);
       rect(0, 0, cshow_width, cshow_height, cshow_height * 0.1);
       image(img_poker_back, 0, 0, cshow_width, cshow_height);
-      text(card.num, 0, 0);
+      fill(255);
+      textSize(30);
+      // text(card.num, 0, 0);
       pop();
     });
     pop();
@@ -282,11 +302,25 @@ function draw() {
     draw_center_items();
     //draw the case 6 text line
     //who needs to drink lines
-    draw_drink_mate_lines();
+    // draw_drink_mate_lines();
     //draw the current task in 4 sides
     draw_current_task();
     //display card left
     showCurrentCard();
+    //mate_diaplay
+    mate_diaplay();
+  } else if (gamePage == "neverEver") {
+    draw_center_items();
+    draw_current_task();
+    showCurrentCard();
+    mate_diaplay();
+    push();
+    fill(uiClr.t2);
+    textAlign(CENTER, CENTER);
+    textSize(textSize_m);
+    translate(width * 0.5, height * 0.07);
+    text(cur_never_ever, 0, 0);
+    pop();
   } else if (gamePage == "selectMate") {
     push();
     fill(uiClr.t2);
@@ -367,23 +401,31 @@ function draw() {
           gamePage = "gameover";
           winsound.play();
         }
+      } else if (currentNumber == 11) {
+        gamePage = "neverEver";
+        cur_never_ever = random(never_list);
+        setTimeout(() => {
+          btns.never_ever_ques.show();
+          btns.never_ever_finish.show();
+        }, 800);
       } else {
         gamePage = "play";
         // btns.draw_button.show();
       }
     }
   } else if (gamePage == "gameover") {
-    fill(255, 0, 0, 140);
-    rect(0, 0, width, height);
+    background(175, 20, 20);
+    push();
     fill(255);
-    rect(0, 200, width, 200);
-    fill(0);
     textAlign(CENTER);
     textSize(textSize_base);
-    text("You are the drinking KING!", width / 2, 260);
+    text("You are the drinking KING!", width / 2, height * 0.7);
     textSize(textSize_base);
-    text("Game Over", width / 2, 350);
+    text("Game Over", width / 2, height * 0.2);
+    textSize(textSize_x);
+    text("K", width / 2, height * 0.5);
     game_over = true;
+    pop();
   }
   if (aniTimer < 1800 && aniTimer >= 1000) {
     push();
@@ -434,6 +476,7 @@ function draw() {
   pop();
 }
 function mouseReleased() {
+  s_filp.stop();
   cards.forEach((card, index) => {
     if (
       mouseX > cshow_x &&
@@ -445,6 +488,7 @@ function mouseReleased() {
       if (millis() - drew_timer < 1000) {
         return;
       }
+      s_pick.play();
       console.log(card.num, index);
       currentNumber = card.num;
       currentIndex = index;
@@ -496,6 +540,10 @@ function mousePressed() {
   //draw_a_card()
   if (gamePage == "play") {
     draw_a_card();
+  } else if (gamePage == "gameover") {
+    location.reload();
+  } else if (gamePage == "pick" || gamePage == "choose") {
+    s_filp.loop();
   }
 }
 // function touchStarted() {}
@@ -544,10 +592,10 @@ function createAButton(
 ) {
   let buttonVar = createButton(lable);
   buttonVar.sizeSet = { w: 0.2 * size * sizew, h: 0.07 * size, font: size };
-  buttonVar.pos = { x: xS * ww - vw * buttonVar.sizeSet.w * 0.5, y: yS * hh - vw * buttonVar.sizeSet.w * 0.5 };
+  buttonVar.pos = { x: xS * ww - vw * buttonVar.sizeSet.w * 0.5, y: yS * hh - vh * buttonVar.sizeSet.h * 0.5 };
   buttonVar.position(buttonVar.pos.x, buttonVar.pos.y, "fixed");
   buttonVar.size(vw * buttonVar.sizeSet.w, vw * buttonVar.sizeSet.h);
-  buttonVar.style("font-size", String(vw * 0.02 * buttonVar.sizeSet.font) + "pt");
+  buttonVar.style("font-size", String(vw * 0.025 * buttonVar.sizeSet.font) + "pt");
   buttonVar.addClass("button");
   buttonVar.id(vari);
   buttonVar.hide();

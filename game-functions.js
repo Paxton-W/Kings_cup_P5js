@@ -56,7 +56,7 @@ function draw_center_items() {
   fill(255, 70);
   textSize(textSize_m);
   textAlign(CENTER);
-  let h = height * 0.52;
+  let h = height * 0.55;
   if (king_cup_times > 3) {
     fill(255, 255, 0);
   }
@@ -80,20 +80,22 @@ function draw_center_items() {
   fill(255);
   textSize(textSize_l);
   textAlign(CENTER);
+  let midx = width / 2;
+  let midy = height * 0.52;
   if (currentNumber > 10) {
     switch (currentNumber) {
       case 11:
-        text("J", width / 2, height * 0.49);
+        text("J", midx, midy);
         break;
       case 12:
-        text("Q", width / 2, height * 0.49);
+        text("Q", midx, midy);
         break;
       case 13:
-        text("K", width / 2, height * 0.49);
+        text("K", midx, midy);
         break;
     }
   } else {
-    text(currentNumber, width / 2, height * 0.49);
+    text(currentNumber, midx, midy);
   }
 
   pop();
@@ -102,6 +104,7 @@ function draw_center_items() {
 let linegap = 14;
 
 function draw_drink_mate_lines() {
+  //not using
   let mate_x_1 = windowSize_base * 40;
   let mate_x_2 = textSize_s * 0.5;
   push();
@@ -369,6 +372,23 @@ function draw_a_card_run() {
       break;
   }
 
-  drew_timer -= 510;
+  // drew_timer -= 510;
   gamePage = "play";
+}
+
+function mate_diaplay() {
+  push();
+  textAlign(LEFT);
+  fill(uiClr.t3);
+  textSize(textSize_m);
+  mateDisplay.forEach((mate, index) => {
+    push();
+    translate(width * 0.2, height * 0.8 + index * 40);
+    text(mate.host + "  -->  " + mate.mate, 0, 0);
+    translate(width * 0.6, height * -0.6 - index * 40 * 2);
+    rotate(radians(180));
+    text(mate.host + "  -->  " + mate.mate, 0, 0);
+    pop();
+  });
+  pop();
 }

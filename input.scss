@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "LilitaOne";
+  src: url("assets/LilitaOne-Regular.ttf") format("truetype"); /* Modern Browsers */
+}
+@font-face {
+  font-family: "ShareTechMono";
+  src: url("assets/ShareTechMono-Regular.ttf") format("truetype"); /* Modern Browsers */
+}
 html,
 body {
   margin: 0;
@@ -21,9 +29,10 @@ canvas {
 }
 
 .button {
+  font-family: "ShareTechMono";
+  letter-spacing: -1px !important;
   position: fixed;
   background-color: transparent;
-  cursor: pointer;
   border: 3px solid #fff;
   overflow: hidden;
   border-radius: 30px;
