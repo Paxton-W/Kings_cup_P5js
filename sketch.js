@@ -120,9 +120,9 @@ function setup() {
 
   windowSize_base = width * 0.0015;
 
-  textSize_s = windowSize_base * 32;
+  textSize_s = windowSize_base * 28;
   textSize_base = windowSize_base * 53;
-  textSize_m = windowSize_base * 26;
+  textSize_m = windowSize_base * 30;
   textSize_l = windowSize_base * 65;
   textSize_xl = windowSize_base * 85;
   textSize_x = windowSize_base * 500;
