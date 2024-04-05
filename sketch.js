@@ -65,7 +65,8 @@ let font_1, font_2;
 //for card pick display
 let cshow_top, cshow_gap, cshow_width, cshow_height, cshow_x;
 //for select mate keyboard
-let alphabet = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".split(",");
+// let alphabet = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".split(",");
+let alphabet = "PAX,MAX,JOL,JER,SEB,MEL,EME,AGI,ALI".split(",");
 let keyboard_1_input = "";
 let keyboard_2_input = "";
 let showMateKeyboard = false;
@@ -164,7 +165,7 @@ function setup() {
     });
   });
   //keyboard 1 clear button
-  createAButton("key_1_clear", "Clear", 0.8, 3 * 0.06 + 0.3, undefined, 0.8, () => {
+  createAButton("key_1_clear", "Clear", 0.8, 3 * 0.06 + 0.3 + 0.01, undefined, 0.8, () => {
     keyboard_1_input = "";
   });
   //keyboard 2 button
@@ -174,7 +175,7 @@ function setup() {
     });
   });
   //keyboard 2 clear button
-  createAButton("key_2_clear", "Clear", 0.8, 3 * 0.06 + 0.6, undefined, 0.8, () => {
+  createAButton("key_2_clear", "Clear", 0.8, 3 * 0.06 + 0.6 + 0.01, undefined, 0.8, () => {
     keyboard_2_input = "";
   });
   //submit button
