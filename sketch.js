@@ -85,8 +85,8 @@ function preload() {
   font_1 = loadFont("assets/LilitaOne-Regular.ttf");
   font_2 = loadFont("assets/ShareTechMono-Regular.ttf");
   soundFormats("wav");
-  s_filp = loadSound("assets/filp");
-  s_pick = loadSound("assets/pick");
+  s_filp = loadSound("assets/flip.wav");
+  s_pick = loadSound("assets/pick.wav");
   hitsound2 = loadSound("assets/chillhit");
   winsound = loadSound("assets/Horn");
   drawsound = loadSound("assets/draw");
