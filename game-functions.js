@@ -38,13 +38,8 @@ function draw_credit() {
   push();
   fill(255, 100);
   textSize(textSize_s);
-  text("Drinking Game", width * 0.05, height - 4);
-  textSize(textSize_s);
-  text("By Paxton", width * 0.35, height - 4);
-  text("ver.2.3", width * 0.8, height - 4);
-  text("King : " + king_cup_times, width * 0.6, height - 4);
-  textAlign(CENTER);
-  textSize(textSize_s);
+  text("Developed By Paxton", width * 0.1, height - 4);
+  text("ver.3.0", width * 0.8, height - 4);
   pop();
 }
 
@@ -223,6 +218,7 @@ function draw_current_task() {
 }
 
 function if_game_over() {
+  //not using
   if (king_cup_times >= 4) {
     winsound.play();
     fill(255, 0, 0, 140);
@@ -299,159 +295,47 @@ function draw_case_6_in_draw() {
     // button.hide();
   }
 }
-function showCurrentCard() {
-  if (card_has_drawed) {
-    card_1 =
-      card_2 =
-      card_3 =
-      card_4 =
-      card_5 =
-      card_6 =
-      card_7 =
-      card_8 =
-      card_9 =
-      card_10 =
-      card_11 =
-      card_12 =
-      card_13 =
-        0;
-    for (c = 0; c < cards.length; c++) {
-      switch (cards[c]) {
-        case 1:
-          card_1++;
-          break;
-        case 2:
-          card_2++;
-          break;
-        case 3:
-          card_3++;
-          break;
-        case 4:
-          card_4++;
-          break;
-        case 5:
-          card_5++;
-          break;
-        case 6:
-          card_6++;
-          break;
-        case 7:
-          card_7++;
-          break;
-        case 8:
-          card_8++;
-          break;
-        case 9:
-          card_9++;
-          break;
-        case 10:
-          card_10++;
-          break;
-        case 11:
-          card_11++;
-          break;
-        case 12:
-          card_12++;
-          break;
-        case 13:
-          card_13++;
-          break;
-        default:
-          // Handle default case (if needed)
-          break;
-      }
-    }
-    cur_card_count = [
-      card_1,
-      card_2,
-      card_3,
-      card_4,
-      card_5,
-      card_6,
-      card_7,
-      card_8,
-      card_9,
-      card_10,
-      card_11,
-      card_12,
-      card_13,
-    ];
-
-    card_has_drawed = false;
-  }
-
-  for (w = 0; w < card_ls.length; w++) {
-    push();
-    textAlign(CENTER);
-    noStroke();
-    fill(255);
-    translate(40 + w * 25, 30);
-    text(card_ls[w], 0, 0);
-    noFill();
-    stroke(255);
-    strokeWeight(3);
-    translate(0.2, -3.6);
-    if (cur_card_count[w] == 4) {
-      arc(0, 0, 20, 20, -HALF_PI, PI + HALF_PI);
-    } else if (cur_card_count[w] == 3) {
-      arc(0, 0, 20, 20, -HALF_PI, PI);
-    } else if (cur_card_count[w] == 2) {
-      arc(0, 0, 20, 20, -HALF_PI, HALF_PI);
-    } else if (cur_card_count[w] == 1) {
-      arc(0, 0, 20, 20, -HALF_PI, 0);
-    }
-    pop();
-  }
-}
 
 let drew_timer = -1001;
 let new_num = 0;
 let draw_card_run = false;
 
 function draw_a_card() {
-  if (draw_case_6) {
-    return;
-  }
-  if (game_over) {
-    return;
-  }
   if (millis() - drew_timer < 2000) {
     return;
   }
   drew_timer = millis();
-  // drawsound.stop();
-  //hitsound2.stop();
-  // draw_card_run = true;
-  // drawsound.play();
   gamePage = "pick";
+  btns.draw_button.hide();
 }
 
 function draw_a_card_run() {
-  if (!draw_card_run) {
-    return;
-  }
+  //not using
+  // if (!draw_card_run) {
+  //   return;
+  // }
   //tap too close return
-  if (millis() - drew_timer > 1500) {
-    //draw_a_card()
-    return;
-  } else if (millis() - drew_timer < 1000) {
-    //in 1 sec, play the animation of shuffling the cards
-    currentNumber = int(random(1, 13.9));
-    return;
-  }
+  // if (millis() - drew_timer > 1500) {
+  //   //draw_a_card()
+  //   return;
+  // } else if (millis() - drew_timer < 1000) {
+  //in 1 sec, play the animation of shuffling the cards
+  // currentNumber = int(random(1, 13.9));
+  // return;
+  // }
   //stop the sound
   hitsound2.stop();
   //pick a random number
-  let n = int(random(cards.length));
+  // let n = int(random(cards.length));
   //find if is same as previous, if so, pick again
-  while (cards[n] == lastNumber && lastNumber !== 13) {
-    n = int(random(cards.length));
-    print("same");
-  }
+  // while (cards[n] == lastNumber && lastNumber !== 13) {
+  //   n = int(random(cards.length));
+  //   print("same");
+  // }
   //remove the card from pale
-  currentNumber = cards[n];
-  cards.splice(n, 1);
-  lastNumber = currentNumber;
+  // currentNumber = cards[n];
+  // cards.splice(n, 1);
+  // lastNumber = currentNumber;
 
   //this line is only for testing
   //currentNumber = 6;
@@ -466,15 +350,18 @@ function draw_a_card_run() {
   if_new_change = true;
 
   //display current cards left
-  card_has_drawed = true;
+  // card_has_drawed = true;
   //set the delay in case6
   //count the kings cup times
   switch (currentNumber) {
     case 6:
-      set_delays = frameCount;
-      if_new_change = false;
-      if_case_6 = false;
-      draw_case_6 = true;
+      for (let letter of alphabet) {
+        let buttonKey1 = "key_1_" + letter;
+        btns[buttonKey1].show();
+        let buttonKey2 = "key_2_" + letter;
+        btns[buttonKey2].show();
+      }
+      gamePage = "selectMate";
       break;
     case 13:
       if_new_change = false;
@@ -483,4 +370,5 @@ function draw_a_card_run() {
   }
 
   drew_timer -= 510;
+  gamePage = "play";
 }
