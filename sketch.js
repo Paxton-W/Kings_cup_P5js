@@ -1,6 +1,8 @@
 let center_e_clr;
 let game_over = false;
 let draw_button;
+
+let uiClr = { bg: "#0E1428", t1: "#F18805", t2: "#D95D39", t3: "#7B9E89" };
 //buttons array
 let btns = {};
 //img
@@ -66,6 +68,7 @@ let cshow_top, cshow_gap, cshow_width, cshow_height, cshow_x;
 let alphabet = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".split(",");
 let keyboard_1_input = "";
 let keyboard_2_input = "";
+let showMateKeyboard = false;
 //mate display
 let mateDisplay = [];
 
@@ -119,7 +122,7 @@ function setup() {
 
   textSize_s = windowSize_base * 32;
   textSize_base = windowSize_base * 53;
-  textSize_m = windowSize_base * 37;
+  textSize_m = windowSize_base * 26;
   textSize_l = windowSize_base * 65;
   textSize_xl = windowSize_base * 85;
   textSize_x = windowSize_base * 500;
@@ -156,7 +159,7 @@ function setup() {
   //create select mate keyboard
   //keyboard 1  button
   alphabet.forEach((a, index) => {
-    createAButton("key_1_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.3, undefined, 0.6, () => {
+    createAButton("key_1_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.3, undefined, 0.5, () => {
       keyboard_1_input += a;
     });
   });
@@ -166,7 +169,7 @@ function setup() {
   });
   //keyboard 2 button
   alphabet.forEach((a, index) => {
-    createAButton("key_2_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.6, undefined, 0.6, () => {
+    createAButton("key_2_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.6, undefined, 0.5, () => {
       keyboard_2_input += a;
     });
   });
@@ -190,6 +193,7 @@ function setup() {
     btns.key_1_clear.hide();
     btns.key_2_clear.hide();
     btns.mate_submit.hide();
+    showMateKeyboard = false;
     // btns.draw_button.show();
   });
 
@@ -220,23 +224,29 @@ function draw() {
   let aniTimer = millis() - pickAniTimer;
   //change background when hit the screen
   // background_control(); //not using
-  background(bk_color);
+  background(uiClr.bg);
   //welcome page
   if (gamePage == "welcome") {
     //draw the bottom info
     draw_credit();
     //
     push();
+    fill(uiClr.t1);
     textAlign(CENTER);
     textSize(50);
-    text("welcome page", width / 2, height * 0.3);
+    text("King's  Cup", width / 2, height * 0.3);
+    textSize(20);
+    fill(uiClr.t3);
+    text("Drinking Party Game", width / 2, height * 0.35);
     pop();
   } else if (gamePage == "pick" || gamePage == "choose") {
     push();
     textAlign(CENTER);
-    textSize(50);
+
     translate(width * 0.2, height * 0.5);
     rotate(radians(90));
+    fill(uiClr.t1);
+    textSize(60);
     text("pick a card", 0, 0);
     translate(0, -width * 0.6);
     rotate(radians(180));
@@ -244,7 +254,7 @@ function draw() {
     pop();
     push();
     stroke(30);
-    fill(160);
+    fill(uiClr.t3);
     cards.forEach((card) => {
       let cshow_x_offset = 0;
       if (
@@ -264,6 +274,8 @@ function draw() {
       pop();
     });
     pop();
+    //display card left
+    showCurrentCard();
   } else if (gamePage == "play") {
     //draw the items in the center
     draw_center_items();
@@ -276,8 +288,9 @@ function draw() {
     showCurrentCard();
   } else if (gamePage == "selectMate") {
     push();
+    fill(uiClr.t2);
     textAlign(CENTER, CENTER);
-    textSize(50);
+    textSize(40);
     translate(width * 0.5, height * 0.1);
     text("Select a mate", 0, 0);
     translate(0, height * 0.1);
@@ -285,12 +298,28 @@ function draw() {
     translate(0, height * 0.3);
     text("You choose", 0, 0);
     translate(0, height * 0.3);
+    textSize(25);
+    fill(uiClr.t1);
     text(keyboard_2_input + " drinks when " + keyboard_1_input + " drinks!", 0, 0);
     pop();
+    if (aniTimer > 1800 && !showMateKeyboard) {
+      for (let letter of alphabet) {
+        let buttonKey1 = "key_1_" + letter;
+        btns[buttonKey1].show();
+        let buttonKey2 = "key_2_" + letter;
+        btns[buttonKey2].show();
+      }
+      btns.key_1_clear.show();
+      btns.key_2_clear.show();
+      btns.mate_submit.show();
+      showMateKeyboard = true;
+    }
   } else if (gamePage == "hasChosen") {
     push();
     stroke(30);
-    fill(160);
+    fill(uiClr.t3);
+    // let card Picked Display Height
+    let cpdh = vw * 1.5;
     if (aniTimer < 200) {
       cards.forEach((card, index) => {
         let cshow_x_offset = 0;
@@ -305,44 +334,28 @@ function draw() {
       });
     } else if (aniTimer < 1000) {
       push();
+      imageMode(CENTER);
+      rectMode(CENTER);
+      translate(width / 2, height / 2);
       var tti = map(aniTimer, 200, 1000, 0, 1);
       translate((1 - easeOutExpo(tti)) * width, 0);
-      rect(0, 0, width, height, height * 0.1);
-      image(img_poker_back_p, 0, 0, width, height);
+      rect(0, 0, vw, cpdh, width * 0.1);
+      image(img_poker_back_p, 0, 0, vw, cpdh);
       pop();
     } else if (aniTimer < 1800) {
       push();
+      imageMode(CENTER);
+      rectMode(CENTER);
+      translate(width / 2, height / 2);
       var tti = map(aniTimer, 1000, 1800, 0, 1);
       translate(-easeInOutExpo(tti) * width, 0);
-      rect(0, 0, width, height, height * 0.1);
-      image(img_poker_back_p, 0, 0, width, height);
+      rect(0, 0, vw, cpdh, width * 0.1);
+      image(img_poker_back_p, 0, 0, vw, cpdh);
       pop();
-    } else if (aniTimer < 1300) {
-      // push();
-      // rectMode(CENTER);
-      // imageMode(CENTER);
-      // textAlign(CENTER, CENTER);
-      // textSize(400);
-      // let tsc = map(aniTimer, 1000, 1300, 0, 1);
-      // translate(width / 2, height / 2);
-      // rect(0, 0, width * tsc, height, height * 0.1);
-      // fill(255);
-      // // scale(tsc, 0);
-      // text(currentNumber, 0, 0);
-      // pop();
     }
     pop();
     if (aniTimer > 1000) {
       if (currentNumber == 6) {
-        for (let letter of alphabet) {
-          let buttonKey1 = "key_1_" + letter;
-          btns[buttonKey1].show();
-          let buttonKey2 = "key_2_" + letter;
-          btns[buttonKey2].show();
-        }
-        btns.key_1_clear.show();
-        btns.key_2_clear.show();
-        btns.mate_submit.show();
         gamePage = "selectMate";
       } else if (currentNumber == 13) {
         king_cup_times++;
@@ -373,12 +386,17 @@ function draw() {
   }
   if (aniTimer < 1800 && aniTimer >= 1000) {
     push();
+    imageMode(CENTER);
+    rectMode(CENTER);
+    translate(width / 2, height / 2);
     stroke(30);
-    fill(160);
+    fill(uiClr.t3);
     var tti = map(aniTimer, 1000, 1800, 0, 1);
+    // let card Picked Display Height
+    let cpdh = vw * 1.5;
     translate(-easeInOutExpo(tti) * width, 0);
-    rect(0, 0, width, height, height * 0.1);
-    image(img_poker_back_p, 0, 0, width, height);
+    rect(0, 0, vw, cpdh, width * 0.1);
+    image(img_poker_back_p, 0, 0, vw, cpdh);
     pop();
   }
   //all the game cases switch in game-cases.js
@@ -494,7 +512,7 @@ function sizeRefresh() {
   h = height;
   ww = windowWidth;
   hh = windowHeight;
-  vw = min(w, 600);
+  vw = min(w, 800);
   vh = min(h, 1200);
   //button pos
   // draw_button.position(width / 2 - width * 0.125, height * 0.53);

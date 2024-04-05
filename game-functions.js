@@ -83,17 +83,17 @@ function draw_center_items() {
   if (currentNumber > 10) {
     switch (currentNumber) {
       case 11:
-        text("J", width / 2, height * 0.47);
+        text("J", width / 2, height * 0.49);
         break;
       case 12:
-        text("Q", width / 2, height * 0.47);
+        text("Q", width / 2, height * 0.49);
         break;
       case 13:
-        text("K", width / 2, height * 0.47);
+        text("K", width / 2, height * 0.49);
         break;
     }
   } else {
-    text(currentNumber, width / 2, height * 0.47);
+    text(currentNumber, width / 2, height * 0.49);
   }
 
   pop();
@@ -203,13 +203,13 @@ function draw_current_task() {
     width > 500 && textSize(textSize_s);
     textAlign(CENTER);
 
-    text(currentDis, width / 2, height * 0.7);
+    text(currentDis, width / 2, height * 0.73);
 
     rotate(PI / 2);
     width > 500 && text(currentDis, height / 2, -width * 0.15);
 
     rotate(PI / 2);
-    text(currentDis, -width / 2, -height * 0.3);
+    text(currentDis, -width / 2, -height * 0.27);
 
     rotate(PI / 2);
     width > 500 && text(currentDis, -height / 2, width * 0.85);
