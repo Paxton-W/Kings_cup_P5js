@@ -88,7 +88,7 @@ function preload() {
   s_filp = loadSound("assets/flip.wav");
   s_pick = loadSound("assets/pick.wav");
   hitsound2 = loadSound("assets/chillhit");
-  winsound = loadSound("assets/Horn");
+  winsound = loadSound("assets/Horn.wav");
   drawsound = loadSound("assets/draw");
   img_poker_back = loadImage("assets/poker.png");
   img_poker_back_p = loadImage("assets/poker_p.png");
