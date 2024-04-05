@@ -84,12 +84,11 @@ let pickAniTimer;
 function preload() {
   font_1 = loadFont("assets/LilitaOne-Regular.ttf");
   font_2 = loadFont("assets/ShareTechMono-Regular.ttf");
-  soundFormats("wav");
   s_filp = loadSound("assets/flip.wav");
   s_pick = loadSound("assets/pick.wav");
-  hitsound2 = loadSound("assets/chillhit");
+  hitsound2 = loadSound("assets/chillhit.wav");
   winsound = loadSound("assets/Horn.wav");
-  drawsound = loadSound("assets/draw");
+  drawsound = loadSound("assets/draw.wav");
   img_poker_back = loadImage("assets/poker.png");
   img_poker_back_p = loadImage("assets/poker_p.png");
 }
