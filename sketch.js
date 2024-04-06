@@ -288,10 +288,10 @@ function draw() {
     rotate(radians(90));
     fill(uiClr.t1);
     textSize(60);
-    text("pick a card", 0, 0);
+    width > 500 && text("pick a card", 0, 0);
     translate(0, -width * 0.6);
     rotate(radians(180));
-    text("pick a card", 0, 0);
+    width > 500 && text("pick a card", 0, 0);
     pop();
     push();
     stroke(30);
