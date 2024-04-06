@@ -78,7 +78,7 @@ let cur_never_ever = "";
 let gamePage = "load";
 //load, welcome, set, play, pick, mate, gameover
 // set the sound effect
-let s_filp, s_pick, s_pick_get1, s_pick_get2, s_pick_get3, s_pick_get4, s_shuffle;
+let s_filp, s_pick, s_pick_get1, s_pick_get2, s_pick_get3, s_pick_get4, s_shuffle, s_change, s_select;
 let hitsound2, winsound, drawsound;
 let currentIndex;
 let pickAniTimer;
@@ -95,6 +95,8 @@ function preload() {
   s_pick_get3 = loadSound("assets/pick_get3.wav");
   s_pick_get4 = loadSound("assets/pick_get4.wav");
   s_shuffle = loadSound("assets/shuffle.wav");
+  s_change = loadSound("assets/change.wav");
+  s_select = loadSound("assets/select.wav");
   hitsound2 = loadSound("assets/chillhit.wav");
   winsound = loadSound("assets/Horn.wav");
   drawsound = loadSound("assets/draw.wav");
@@ -165,23 +167,27 @@ function setup() {
   alphabet.forEach((a, index) => {
     createAButton("key_1_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.3, undefined, 0.5, () => {
       keyboard_1_input = a;
+      s_select.play();
       // keyboard_1_input += a;
     });
   });
   //keyboard 1 clear button
   createAButton("key_1_clear", "Clear", 0.8, 3 * 0.06 + 0.3 + 0.01, undefined, 0.8, () => {
     keyboard_1_input = "";
+    s_select.play();
   });
   //keyboard 2 button
   alphabet.forEach((a, index) => {
     createAButton("key_2_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.6, undefined, 0.5, () => {
       keyboard_2_input = a;
+      s_select.play();
       // keyboard_2_input += a;
     });
   });
   //keyboard 2 clear button
   createAButton("key_2_clear", "Clear", 0.8, 3 * 0.06 + 0.6 + 0.01, undefined, 0.8, () => {
     keyboard_2_input = "";
+    s_select.play();
   });
   //submit button
   createAButton("mate_submit", "Submit", 0.5, 0.95, undefined, 1.8, () => {
@@ -202,43 +208,45 @@ function setup() {
     // btns.draw_button.show();
     gamePage = "play";
     drew_timer = millis();
+    s_change.play();
   });
   //never have i ever question button
   createAButton("never_ever_ques", "Change", 0.3, 0.95, 1.3, undefined, () => {
     //code goes here
     cur_never_ever = random(never_list);
+    s_change.play();
   });
   createAButton("never_ever_finish", "Next player", 0.7, 0.95, 1.3, 1.3, () => {
     //code goes here
     btns.never_ever_ques.hide();
     btns.never_ever_finish.hide();
     gamePage = "pick";
-    drew_timer = millis();
+    draw_a_card();
   });
   //categories question button
   createAButton("categories_ques", "Change", 0.3, 0.95, 1.3, undefined, () => {
     //code goes here
     categories_current = random(categories_list);
+    s_change.play();
   });
   createAButton("categories_finish", "Next player", 0.7, 0.95, 1.3, 1.3, () => {
     //code goes here
     btns.categories_ques.hide();
     btns.categories_finish.hide();
-    gamePage = "pick";
-    drew_timer = millis();
+    draw_a_card();
   });
 
   //rule question button
   createAButton("rule_ques", "Change", 0.3, 0.95, 1.3, undefined, () => {
     //code goes here
     rule_current = random(rule_list);
+    s_change.play();
   });
   createAButton("rule_finish", "Next player", 0.7, 0.95, 1.3, 1.3, () => {
     //code goes here
     btns.rule_ques.hide();
     btns.rule_finish.hide();
-    gamePage = "pick";
-    drew_timer = millis();
+    draw_a_card();
   });
 
   btns.welcome_play.show();
@@ -462,7 +470,9 @@ function draw() {
     } else if (aniTimer < 1000) {
       //
       cards.forEach((card, index) => {
-        let cshow_y_offset = card.display.y * map(aniTimer, 200, 1000, 1, 0) + map(aniTimer, 200, 1000, 0, width * 0.5);
+        let cshow_y_offset =
+          card.display.y * max(0, map(aniTimer, 200, 600, 1, 0)) +
+          min(width * 0.6, map(aniTimer, 200, 600, 0, width * 0.6));
         push();
         translate(cshow_x, cshow_y_offset);
         rotate(radians(card.rotate));
