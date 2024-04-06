@@ -65,7 +65,7 @@ function game_cases_switch() {
     case 11:
       currentText = "Never Ever";
       if_new_change = false;
-      currentDis = "Never Have I Ever";
+      currentDis = "If no one has done, you drink";
       center_e_clr = color(242, 147, 37);
       break;
     case 12:

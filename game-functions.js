@@ -239,6 +239,7 @@ function if_game_over() {
 }
 
 function friends_drink_record() {
+  //not using
   draw_case_6 = false;
   //name1 = prompt("Please enter your name:", "Jerry");
   //name2 = prompt("Who you select?", "Aiden");
@@ -375,18 +376,18 @@ function draw_a_card_run() {
 }
 
 function mate_diaplay() {
+  let mate_display_text = "";
+  mateDisplay.forEach((mate, index) => {
+    mate_display_text += mate.host + "  -->  " + mate.mate + "  |  ";
+  });
   push();
   textAlign(LEFT);
   fill(uiClr.t3);
-  textSize(textSize_m);
-  mateDisplay.forEach((mate, index) => {
-    push();
-    translate(width * 0.2, height * 0.8 + index * 40);
-    text(mate.host + "  -->  " + mate.mate, 0, 0);
-    translate(width * 0.6, height * -0.6 - index * 40 * 2);
-    rotate(radians(180));
-    text(mate.host + "  -->  " + mate.mate, 0, 0);
-    pop();
-  });
+  textSize(textSize_s);
+  translate(width * 0.05, height * 0.8);
+  text(mate_display_text, 0, 0);
+  translate(width * 0.9, height * -0.6);
+  rotate(radians(180));
+  text(mate_display_text, 0, 0);
   pop();
 }

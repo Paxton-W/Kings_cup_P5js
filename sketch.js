@@ -83,6 +83,8 @@ let hitsound2, winsound, drawsound;
 let currentIndex;
 let pickAniTimer;
 let choosePageTimer;
+let rule_current;
+let cur_rotate180;
 function preload() {
   font_1 = loadFont("assets/LilitaOne-Regular.ttf");
   font_2 = loadFont("assets/ShareTechMono-Regular.ttf");
@@ -128,15 +130,6 @@ function setup() {
   // draw_button.addClass("button-74");
   // draw_button.hide();
 
-  windowSize_base = width * 0.0015;
-
-  textSize_s = windowSize_base * 22;
-  textSize_base = windowSize_base * 53;
-  textSize_m = windowSize_base * 30;
-  textSize_ml = windowSize_base * 40;
-  textSize_l = windowSize_base * 70;
-  textSize_xl = windowSize_base * 85;
-  textSize_x = windowSize_base * 300;
   // print(width + "," + height);
   // print(windowSize_base);
 
@@ -219,7 +212,7 @@ function setup() {
     //code goes here
     btns.never_ever_ques.hide();
     btns.never_ever_finish.hide();
-    gamePage = "play";
+    gamePage = "pick";
     drew_timer = millis();
   });
   //categories question button
@@ -231,7 +224,20 @@ function setup() {
     //code goes here
     btns.categories_ques.hide();
     btns.categories_finish.hide();
-    gamePage = "play";
+    gamePage = "pick";
+    drew_timer = millis();
+  });
+
+  //rule question button
+  createAButton("rule_ques", "Change", 0.3, 0.95, 1.3, undefined, () => {
+    //code goes here
+    rule_current = random(rule_list);
+  });
+  createAButton("rule_finish", "Next player", 0.7, 0.95, 1.3, 1.3, () => {
+    //code goes here
+    btns.rule_ques.hide();
+    btns.rule_finish.hide();
+    gamePage = "pick";
     drew_timer = millis();
   });
 
@@ -356,6 +362,23 @@ function draw() {
       text(cur_never_ever, 0, 0);
       pop();
     }
+  } else if (gamePage == "rule") {
+    draw_center_items();
+    draw_current_task();
+    showCurrentCard();
+    mate_diaplay();
+    if (aniTimer > 1800) {
+      push();
+      fill(uiClr.t2);
+      textAlign(CENTER);
+      textSize(textSize_ml);
+      translate(width * 0.5, height * 0.07);
+      text(rule_current.topic, 0, 0);
+      translate(0, height * 0.03);
+      textSize(textSize_s);
+      text(rule_current.description, 0, 0, width * 0.8);
+      pop();
+    }
   } else if (gamePage == "categories") {
     draw_center_items();
     draw_current_task();
@@ -420,6 +443,11 @@ function draw() {
         let cshow_x_offset = 0;
         if (currentIndex == index) {
           cshow_x_offset = (aniTimer / 200) * (width * 0.7);
+          if (card.rotate180) {
+            cur_rotate180 = true;
+          } else {
+            cur_rotate180 = false;
+          }
         }
         push();
         translate(cshow_x + cshow_x_offset, card.display.y);
@@ -432,6 +460,7 @@ function draw() {
         pop();
       });
     } else if (aniTimer < 1000) {
+      //
       cards.forEach((card, index) => {
         let cshow_y_offset = card.display.y * map(aniTimer, 200, 1000, 1, 0) + map(aniTimer, 200, 1000, 0, width * 0.5);
         push();
@@ -451,6 +480,9 @@ function draw() {
       var tti = map(aniTimer, 200, 1000, 0, 1);
       translate((1 - easeOutExpo(tti)) * width, 0);
       strokeWeight(3);
+      if (cur_rotate180) {
+        rotate(radians(180));
+      }
       rect(0, 0, vw, cpdh, width * 0.1);
       image(img_poker_back_p, 0, 0, vw, cpdh);
       pop();
@@ -467,6 +499,8 @@ function draw() {
     }
     pop();
     if (aniTimer > 1000) {
+      //important
+      cards.splice(currentIndex, 1);
       if (currentNumber == 6) {
         gamePage = "selectMate";
         s_pick_get4.play();
@@ -480,6 +514,14 @@ function draw() {
           gamePage = "gameover";
           winsound.play();
         }
+      } else if (currentNumber == 12) {
+        gamePage = "rule";
+        rule_current = random(rule_list);
+        setTimeout(() => {
+          btns.rule_ques.show();
+          btns.rule_finish.show();
+        }, 800);
+        s_pick_get2.play();
       } else if (currentNumber == 11) {
         gamePage = "neverEver";
         cur_never_ever = random(never_list);
@@ -527,6 +569,9 @@ function draw() {
     // let card Picked Display Height
     let cpdh = vw * 1.5;
     translate(-easeInOutExpo(tti) * width, 0);
+    if (cur_rotate180) {
+      rotate(radians(180));
+    }
     strokeWeight(3);
     rect(0, 0, vw, cpdh, width * 0.1);
     image(img_poker_back_p, 0, 0, vw, cpdh);
@@ -580,7 +625,7 @@ function mouseReleased() {
       currentIndex = index;
       cardAmount[card.num]--;
       //important
-      cards.splice(index, 1);
+      // cards.splice(index, 1);
       //run draw card function
       //all the game cases switch in game-cases.js
       game_cases_switch();
@@ -665,6 +710,15 @@ function sizeRefresh() {
   } else {
     screen_rotate = "portrait";
   }
+  windowSize_base = width * 0.0015;
+
+  textSize_s = windowSize_base * 22;
+  textSize_base = windowSize_base * 53;
+  textSize_m = windowSize_base * 30;
+  textSize_ml = windowSize_base * 40;
+  textSize_l = windowSize_base * 70;
+  textSize_xl = windowSize_base * 85;
+  textSize_x = windowSize_base * 300;
 }
 
 //createAButton(btn name, btn lable, x pos, y pos)
