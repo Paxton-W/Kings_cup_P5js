@@ -313,11 +313,11 @@ function draw() {
       // text(millis() - drew_timer, 50, 550);
       push();
       translate(cshow_x + cshow_x_offset, card.display.y * cshow_y_offset);
-      // push();
-      // fill(255);
-      // textSize(30);
-      // text(card.num, cshow_width / 2 + 30, 0);
-      // pop();
+      push();
+      fill(255);
+      textSize(30);
+      text(card.num, cshow_width / 2 + 30, 0);
+      pop();
       rotate(radians(card.rotate));
       if (card.rotate180) {
         rotate(radians(180));
