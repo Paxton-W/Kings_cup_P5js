@@ -450,6 +450,7 @@ function draw() {
       translate(width / 2, height / 2);
       var tti = map(aniTimer, 200, 1000, 0, 1);
       translate((1 - easeOutExpo(tti)) * width, 0);
+      strokeWeight(3);
       rect(0, 0, vw, cpdh, width * 0.1);
       image(img_poker_back_p, 0, 0, vw, cpdh);
       pop();
@@ -526,6 +527,7 @@ function draw() {
     // let card Picked Display Height
     let cpdh = vw * 1.5;
     translate(-easeInOutExpo(tti) * width, 0);
+    strokeWeight(3);
     rect(0, 0, vw, cpdh, width * 0.1);
     image(img_poker_back_p, 0, 0, vw, cpdh);
     pop();
