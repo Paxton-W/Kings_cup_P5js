@@ -78,7 +78,7 @@ let cur_never_ever = "";
 let gamePage = "load";
 //load, welcome, set, play, pick, mate, gameover
 // set the sound effect
-let s_filp, s_pick;
+let s_filp, s_pick, s_pick_get1, s_pick_get2, s_pick_get3, s_pick_get4, s_shuffle;
 let hitsound2, winsound, drawsound;
 let currentIndex;
 let pickAniTimer;
@@ -88,6 +88,11 @@ function preload() {
   font_2 = loadFont("assets/ShareTechMono-Regular.ttf");
   s_filp = loadSound("assets/flip.wav");
   s_pick = loadSound("assets/pick.wav");
+  s_pick_get1 = loadSound("assets/pick_get1.wav");
+  s_pick_get2 = loadSound("assets/pick_get2.wav");
+  s_pick_get3 = loadSound("assets/pick_get3.wav");
+  s_pick_get4 = loadSound("assets/pick_get4.wav");
+  s_shuffle = loadSound("assets/shuffle.wav");
   hitsound2 = loadSound("assets/chillhit.wav");
   winsound = loadSound("assets/Horn.wav");
   drawsound = loadSound("assets/draw.wav");
@@ -308,11 +313,11 @@ function draw() {
       // text(millis() - drew_timer, 50, 550);
       push();
       translate(cshow_x + cshow_x_offset, card.display.y * cshow_y_offset);
-      push();
-      fill(255);
-      textSize(30);
-      text(card.num, cshow_width / 2 + 30, 0);
-      pop();
+      // push();
+      // fill(255);
+      // textSize(30);
+      // text(card.num, cshow_width / 2 + 30, 0);
+      // pop();
       rotate(radians(card.rotate));
       if (card.rotate180) {
         rotate(radians(180));
@@ -463,10 +468,12 @@ function draw() {
     if (aniTimer > 1000) {
       if (currentNumber == 6) {
         gamePage = "selectMate";
+        s_pick_get4.play();
       } else if (currentNumber == 13) {
         king_cup_times++;
         if (king_cup_times < 4) {
           gamePage = "play";
+          s_pick_get3.play();
           // btns.draw_button.show();
         } else {
           gamePage = "gameover";
@@ -479,6 +486,7 @@ function draw() {
           btns.never_ever_ques.show();
           btns.never_ever_finish.show();
         }, 800);
+        s_pick_get2.play();
       } else if (currentNumber == 10) {
         gamePage = "categories";
         categories_current = random(categories_list);
@@ -486,8 +494,10 @@ function draw() {
           btns.categories_ques.show();
           btns.categories_finish.show();
         }, 800);
+        s_pick_get2.play();
       } else {
         gamePage = "play";
+        s_pick_get1.play();
         // btns.draw_button.show();
       }
     }
@@ -521,8 +531,6 @@ function draw() {
     pop();
     drew_timer = millis();
   }
-  //all the game cases switch in game-cases.js
-  game_cases_switch();
 
   //if Gameover
   // if_game_over();
@@ -547,10 +555,10 @@ function draw() {
 
   // card pick display
 
-  push();
-  fill(0, 255, 0);
-  text(gamePage, 50, 50);
-  pop();
+  // push();
+  // fill(0, 255, 0);
+  // text(gamePage, 50, 50);
+  // pop();
 }
 function mouseReleased() {
   s_filp.stop();
@@ -564,6 +572,7 @@ function mouseReleased() {
       millis() - choosePageTimer > 600
     ) {
       s_pick.play();
+
       console.log(card.num, index);
       currentNumber = card.num;
       currentIndex = index;
@@ -571,7 +580,8 @@ function mouseReleased() {
       //important
       cards.splice(index, 1);
       //run draw card function
-
+      //all the game cases switch in game-cases.js
+      game_cases_switch();
       //random pick for case never ever and categories
       //the lists are in all-list.js
       never_current = random(never_list);

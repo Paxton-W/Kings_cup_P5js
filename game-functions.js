@@ -306,6 +306,7 @@ let draw_card_run = false;
 function draw_a_card() {
   gamePage = "pick";
   choosePageTimer = millis();
+  s_shuffle.play();
   btns.draw_button.hide();
 }
 
