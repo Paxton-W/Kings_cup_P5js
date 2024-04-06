@@ -15,6 +15,7 @@ let textSize_base;
 let textSize_s;
 let textSize_m;
 let textSize_l;
+let textSize_ml;
 let textSize_xl;
 let textSize_x;
 let bk_color;
@@ -81,6 +82,7 @@ let s_filp, s_pick;
 let hitsound2, winsound, drawsound;
 let currentIndex;
 let pickAniTimer;
+let choosePageTimer;
 function preload() {
   font_1 = loadFont("assets/LilitaOne-Regular.ttf");
   font_2 = loadFont("assets/ShareTechMono-Regular.ttf");
@@ -94,7 +96,7 @@ function preload() {
 }
 function setup() {
   var pe = document.getElementById("p5-cvs-container");
-  console.log(pe.offsetWidth, pe.offsetHeight);
+  // console.log(pe.offsetWidth, pe.offsetHeight);
   cvs = createCanvas(pe.offsetWidth, pe.offsetHeight);
   cvs.parent("p5-cvs");
   // refocus_myself();
@@ -123,9 +125,10 @@ function setup() {
 
   windowSize_base = width * 0.0015;
 
-  textSize_s = windowSize_base * 28;
+  textSize_s = windowSize_base * 22;
   textSize_base = windowSize_base * 53;
   textSize_m = windowSize_base * 30;
+  textSize_ml = windowSize_base * 40;
   textSize_l = windowSize_base * 70;
   textSize_xl = windowSize_base * 85;
   textSize_x = windowSize_base * 300;
@@ -134,10 +137,10 @@ function setup() {
 
   //push all 52 cards
   for (i = 1; i <= 13; i++) {
-    cards.push({ num: i });
-    cards.push({ num: i });
-    cards.push({ num: i });
-    cards.push({ num: i });
+    cards.push({ num: i, rotate: random(-5, 5), rotate180: random([true, false]) });
+    cards.push({ num: i, rotate: random(-5, 5), rotate180: random([true, false]) });
+    cards.push({ num: i, rotate: random(-5, 5), rotate180: random([true, false]) });
+    cards.push({ num: i, rotate: random(-5, 5), rotate180: random([true, false]) });
   }
   //shuffle the cards
   cards.sort(() => Math.random() - 0.5);
@@ -149,7 +152,7 @@ function setup() {
     let cy = cshow_top + cshow_gap * index;
     card.display = { y: cy };
   });
-  // console.log(cards);
+  console.log(cards);
   //add buttons
   createAButton("draw_button", "^", 0.5, 0.6, undefined, undefined, () => {
     draw_a_card();
@@ -203,7 +206,7 @@ function setup() {
     drew_timer = millis();
   });
   //never have i ever question button
-  createAButton("never_ever_ques", "Generate", 0.3, 0.95, 1.3, undefined, () => {
+  createAButton("never_ever_ques", "Change", 0.3, 0.95, 1.3, undefined, () => {
     //code goes here
     cur_never_ever = random(never_list);
   });
@@ -212,12 +215,27 @@ function setup() {
     btns.never_ever_ques.hide();
     btns.never_ever_finish.hide();
     gamePage = "play";
+    drew_timer = millis();
+  });
+  //categories question button
+  createAButton("categories_ques", "Change", 0.3, 0.95, 1.3, undefined, () => {
+    //code goes here
+    categories_current = random(categories_list);
+  });
+  createAButton("categories_finish", "Next player", 0.7, 0.95, 1.3, 1.3, () => {
+    //code goes here
+    btns.categories_ques.hide();
+    btns.categories_finish.hide();
+    gamePage = "play";
+    drew_timer = millis();
   });
 
   btns.welcome_play.show();
   //set game status
   gamePage = "welcome";
   textFont(font_1);
+  imageMode(CENTER);
+  rectMode(CENTER);
   s_filp.rate(4);
 }
 
@@ -240,6 +258,7 @@ function draw() {
   // }
   //all functions are in game-functions.js except few
   let aniTimer = millis() - pickAniTimer;
+  let choTimer = millis() - choosePageTimer;
   //change background when hit the screen
   // background_control(); //not using
   background(uiClr.bg);
@@ -260,7 +279,6 @@ function draw() {
   } else if (gamePage == "pick" || gamePage == "choose") {
     push();
     textAlign(CENTER);
-
     translate(width * 0.2, height * 0.5);
     rotate(radians(90));
     fill(uiClr.t1);
@@ -273,24 +291,35 @@ function draw() {
     push();
     stroke(30);
     fill(uiClr.t3);
+    let cshow_y_offset = map(choTimer, 0, 2000, 0, 1);
+    cshow_y_offset = easeOutExpo(cshow_y_offset);
+    cshow_y_offset = min(cshow_y_offset, 1);
     cards.forEach((card) => {
       let cshow_x_offset = 0;
+
       if (
-        mouseX > cshow_x &&
-        mouseX < cshow_x + cshow_width &&
-        mouseY > card.display.y &&
-        mouseY < card.display.y + cshow_gap
+        mouseX > cshow_x - cshow_width / 2 &&
+        mouseX < cshow_x + cshow_width / 2 &&
+        mouseY > card.display.y - cshow_height / 2 &&
+        mouseY < card.display.y - cshow_height / 2 + cshow_gap
       ) {
         cshow_x_offset = 50;
       }
       // text(millis() - drew_timer, 50, 550);
       push();
-      translate(cshow_x + cshow_x_offset, card.display.y);
-      rect(0, 0, cshow_width, cshow_height, cshow_height * 0.1);
-      image(img_poker_back, 0, 0, cshow_width, cshow_height);
+      translate(cshow_x + cshow_x_offset, card.display.y * cshow_y_offset);
+      push();
       fill(255);
       textSize(30);
-      // text(card.num, 0, 0);
+      text(card.num, cshow_width / 2 + 30, 0);
+      pop();
+      rotate(radians(card.rotate));
+      if (card.rotate180) {
+        rotate(radians(180));
+      }
+      rect(0, 0, cshow_width, cshow_height, cshow_height * 0.1);
+      image(img_poker_back, 0, 0, cshow_width, cshow_height);
+
       pop();
     });
     pop();
@@ -313,13 +342,29 @@ function draw() {
     draw_current_task();
     showCurrentCard();
     mate_diaplay();
-    push();
-    fill(uiClr.t2);
-    textAlign(CENTER, CENTER);
-    textSize(textSize_m);
-    translate(width * 0.5, height * 0.07);
-    text(cur_never_ever, 0, 0);
-    pop();
+    if (aniTimer > 1800) {
+      push();
+      fill(uiClr.t2);
+      textAlign(CENTER, CENTER);
+      textSize(textSize_ml);
+      translate(width * 0.5, height * 0.07);
+      text(cur_never_ever, 0, 0);
+      pop();
+    }
+  } else if (gamePage == "categories") {
+    draw_center_items();
+    draw_current_task();
+    showCurrentCard();
+    mate_diaplay();
+    if (aniTimer > 1800) {
+      push();
+      fill(uiClr.t2);
+      textAlign(CENTER, CENTER);
+      textSize(textSize_ml);
+      translate(width * 0.5, height * 0.07);
+      text(categories_current, 0, 0);
+      pop();
+    }
   } else if (gamePage == "selectMate") {
     push();
     fill(uiClr.t2);
@@ -350,6 +395,17 @@ function draw() {
     }
   } else if (gamePage == "hasChosen") {
     push();
+    textAlign(CENTER);
+    translate(width * 0.2, height * 0.5);
+    rotate(radians(90));
+    fill(uiClr.t1);
+    textSize(60);
+    text("pick a card", 0, 0);
+    translate(0, -width * 0.6);
+    rotate(radians(180));
+    text("pick a card", 0, 0);
+    pop();
+    push();
     stroke(30);
     fill(uiClr.t3);
     // let card Picked Display Height
@@ -362,11 +418,27 @@ function draw() {
         }
         push();
         translate(cshow_x + cshow_x_offset, card.display.y);
+        rotate(radians(card.rotate));
+        if (card.rotate180) {
+          rotate(radians(180));
+        }
         rect(0, 0, cshow_width, cshow_height, cshow_height * 0.1);
         image(img_poker_back, 0, 0, cshow_width, cshow_height);
         pop();
       });
     } else if (aniTimer < 1000) {
+      cards.forEach((card, index) => {
+        let cshow_y_offset = card.display.y * map(aniTimer, 200, 1000, 1, 0) + map(aniTimer, 200, 1000, 0, width * 0.5);
+        push();
+        translate(cshow_x, cshow_y_offset);
+        rotate(radians(card.rotate));
+        if (card.rotate180) {
+          rotate(radians(180));
+        }
+        rect(0, 0, cshow_width, cshow_height, cshow_height * 0.1);
+        image(img_poker_back, 0, 0, cshow_width, cshow_height);
+        pop();
+      });
       push();
       imageMode(CENTER);
       rectMode(CENTER);
@@ -377,15 +449,15 @@ function draw() {
       image(img_poker_back_p, 0, 0, vw, cpdh);
       pop();
     } else if (aniTimer < 1800) {
-      push();
-      imageMode(CENTER);
-      rectMode(CENTER);
-      translate(width / 2, height / 2);
-      var tti = map(aniTimer, 1000, 1800, 0, 1);
-      translate(-easeInOutExpo(tti) * width, 0);
-      rect(0, 0, vw, cpdh, width * 0.1);
-      image(img_poker_back_p, 0, 0, vw, cpdh);
-      pop();
+      // push();
+      // imageMode(CENTER);
+      // rectMode(CENTER);
+      // translate(width / 2, height / 2);
+      // var tti = map(aniTimer, 1000, 1800, 0, 1);
+      // translate(-easeInOutExpo(tti) * width, 0);
+      // rect(0, 0, vw, cpdh, width * 0.1);
+      // image(img_poker_back_p, 0, 0, vw, cpdh);
+      // pop();
     }
     pop();
     if (aniTimer > 1000) {
@@ -406,6 +478,13 @@ function draw() {
         setTimeout(() => {
           btns.never_ever_ques.show();
           btns.never_ever_finish.show();
+        }, 800);
+      } else if (currentNumber == 10) {
+        gamePage = "categories";
+        categories_current = random(categories_list);
+        setTimeout(() => {
+          btns.categories_ques.show();
+          btns.categories_finish.show();
         }, 800);
       } else {
         gamePage = "play";
@@ -440,6 +519,7 @@ function draw() {
     rect(0, 0, vw, cpdh, width * 0.1);
     image(img_poker_back_p, 0, 0, vw, cpdh);
     pop();
+    drew_timer = millis();
   }
   //all the game cases switch in game-cases.js
   game_cases_switch();
@@ -466,8 +546,6 @@ function draw() {
   // }
 
   // card pick display
-  if (gamePage == "pick" || gamePage == "choose") {
-  }
 
   push();
   fill(0, 255, 0);
@@ -478,15 +556,13 @@ function mouseReleased() {
   s_filp.stop();
   cards.forEach((card, index) => {
     if (
-      mouseX > cshow_x &&
-      mouseX < cshow_x + cshow_width &&
-      mouseY > card.display.y &&
-      mouseY < card.display.y + cshow_gap &&
-      gamePage == "choose"
+      mouseX > cshow_x - cshow_width / 2 &&
+      mouseX < cshow_x + cshow_width / 2 &&
+      mouseY > card.display.y - cshow_height / 2 &&
+      mouseY < card.display.y - cshow_height / 2 + cshow_gap &&
+      gamePage == "choose" &&
+      millis() - choosePageTimer > 600
     ) {
-      if (millis() - drew_timer < 1000) {
-        return;
-      }
       s_pick.play();
       console.log(card.num, index);
       currentNumber = card.num;
@@ -504,6 +580,7 @@ function mouseReleased() {
 
       gamePage = "hasChosen";
       pickAniTimer = millis();
+      drew_timer = millis();
       // if (currentNumber == 6) {
       //   for (let letter of alphabet) {
       //     let buttonKey1 = "key_1_" + letter;
@@ -537,7 +614,8 @@ function mouseReleased() {
 }
 function mousePressed() {
   //draw_a_card()
-  if (gamePage == "play") {
+  // console.log(millis() - drew_timer);
+  if (gamePage == "play" && millis() - drew_timer > 1000) {
     draw_a_card();
   } else if (gamePage == "gameover") {
     location.reload();
@@ -560,16 +638,16 @@ function sizeRefresh() {
   h = height;
   ww = windowWidth;
   hh = windowHeight;
-  vw = min(w, 800);
+  vw = min(w, 600);
   vh = min(h, 1200);
   //button pos
   // draw_button.position(width / 2 - width * 0.125, height * 0.53);
   //reset card pick display value
-  cshow_top = height * 0.1;
-  cshow_gap = (height * 0.6) / cards.length;
+  cshow_top = height * 0.22;
+  cshow_gap = (height * 0.58) / cards.length;
   cshow_width = min(width * 0.7, 300);
   cshow_height = cshow_width * 0.75;
-  cshow_x = width / 2 - cshow_width / 2;
+  cshow_x = width / 2;
   if (width > height) {
     screen_rotate = "landscape";
   } else {

@@ -304,11 +304,8 @@ let new_num = 0;
 let draw_card_run = false;
 
 function draw_a_card() {
-  if (millis() - drew_timer < 2000) {
-    return;
-  }
-  drew_timer = millis();
   gamePage = "pick";
+  choosePageTimer = millis();
   btns.draw_button.hide();
 }
 

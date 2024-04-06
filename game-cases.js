@@ -58,13 +58,14 @@ function game_cases_switch() {
     case 10:
       currentText = "Categories";
       if_new_change = false;
-      currentDis = categories_current;
+      currentDis = "If the third round concludes smoothly,\nthen the host drinks.";
+      // currentDis = categories_current;
       center_e_clr = color(89, 28, 33);
       break;
     case 11:
-      currentText = "Never Have \n I Ever";
+      currentText = "Never Ever";
       if_new_change = false;
-      currentDis = null;
+      currentDis = "Never Have I Ever";
       center_e_clr = color(242, 147, 37);
       break;
     case 12:
