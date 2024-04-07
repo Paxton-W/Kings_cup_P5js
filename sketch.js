@@ -90,13 +90,17 @@ function preload() {
   font_2 = loadFont("assets/ShareTechMono-Regular.ttf");
   s_filp = loadSound("assets/flip.wav");
   s_pick = loadSound("assets/pick.wav");
+  //Flipping Through a Deck of Cards by diammati -- https://freesound.org/s/534983/ -- License: Attribution 3.0
   s_pick_get1 = loadSound("assets/pick_get1.wav");
   s_pick_get2 = loadSound("assets/pick_get2.wav");
+  //Tone12_Msg_Notification_2 by ScottyD0ES -- https://freesound.org/s/716448/ -- License: Attribution NonCommercial 4.0
   s_pick_get3 = loadSound("assets/pick_get3.wav");
   s_pick_get4 = loadSound("assets/pick_get4.wav");
   s_shuffle = loadSound("assets/shuffle.wav");
+  // No Copyright
   s_change = loadSound("assets/change.wav");
   s_select = loadSound("assets/select.wav");
+  //Tone12_Menu_Select by ScottyD0ES -- https://freesound.org/s/716446/ -- License: Attribution NonCommercial 4.0
   hitsound2 = loadSound("assets/chillhit.wav");
   winsound = loadSound("assets/Horn.wav");
   drawsound = loadSound("assets/draw.wav");
