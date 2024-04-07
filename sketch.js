@@ -1,7 +1,7 @@
 let center_e_clr;
 let game_over = false;
 let draw_button;
-
+let devMode = false;
 let uiClr = { bg: "#0E1428", t1: "#F18805", t2: "#D95D39", t3: "#7B9E89" };
 //buttons array
 let btns = {};
@@ -66,11 +66,12 @@ let font_1, font_2;
 //for card pick display
 let cshow_top, cshow_gap, cshow_width, cshow_height, cshow_x;
 //for select mate keyboard
-// let alphabet = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".split(",");
-let alphabet = "PAX,MAX,JOL,JER,SEB,MEL,EME,AGI,ALI".split(",");
+let key_standard = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".split(",");
+let key_pax_edition = "PAX,MAX,JOL,JER,SEB,MEL,EME,AGI,ALI".split(",");
 let keyboard_1_input = "";
 let keyboard_2_input = "";
 let showMateKeyboard = false;
+let cur_mate_keyboard;
 //mate display
 let mateDisplay = [];
 //never generate
@@ -85,6 +86,7 @@ let pickAniTimer;
 let choosePageTimer;
 let rule_current;
 let cur_rotate180;
+let cur_hover_card;
 function preload() {
   font_1 = loadFont("assets/LilitaOne-Regular.ttf");
   font_2 = loadFont("assets/ShareTechMono-Regular.ttf");
@@ -141,10 +143,10 @@ function setup() {
 
   //push all 52 cards
   for (i = 1; i <= 13; i++) {
-    cards.push({ num: i, rotate: random(-5, 5), rotate180: random([true, false]) });
-    cards.push({ num: i, rotate: random(-5, 5), rotate180: random([true, false]) });
-    cards.push({ num: i, rotate: random(-5, 5), rotate180: random([true, false]) });
-    cards.push({ num: i, rotate: random(-5, 5), rotate180: random([true, false]) });
+    cards.push({ num: i, rotate: random(-3, 3), rotate180: random([true, false]), hover: false });
+    cards.push({ num: i, rotate: random(-3, 3), rotate180: random([true, false]), hover: false });
+    cards.push({ num: i, rotate: random(-3, 3), rotate180: random([true, false]), hover: false });
+    cards.push({ num: i, rotate: random(-3, 3), rotate180: random([true, false]), hover: false });
   }
   //shuffle the cards
   cards.sort(() => Math.random() - 0.5);
@@ -158,35 +160,30 @@ function setup() {
   });
   console.log(cards);
   //add buttons
-  createAButton("draw_button", "^", 0.5, 0.6, undefined, undefined, () => {
-    draw_a_card();
-  });
-  createAButton("welcome_play", "Play", 0.5, 0.6, 1.5, undefined, () => {
+  // createAButton("draw_button", "^", 0.5, 0.6, undefined, undefined, () => {
+  //   draw_a_card();
+  // });
+  createAButton("welcome_play", "Standard", 0.5, 0.6, 1.5, undefined, () => {
     gamePage = "play";
     // btns.draw_button.show();
     btns.welcome_play.hide();
+    btns.welcome_play_pax_edition.hide();
+    //create select mate keyboard
+    createMateKeyBoard(key_standard, false);
   });
-  //create select mate keyboard
-  //keyboard 1  button
-  alphabet.forEach((a, index) => {
-    createAButton("key_1_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.3, undefined, 0.5, () => {
-      keyboard_1_input = a;
-      s_select.play();
-      // keyboard_1_input += a;
-    });
+  createAButton("welcome_play_pax_edition", "Pax Edition", 0.5, 0.7, 1.5, 1.3, () => {
+    gamePage = "play";
+    // btns.draw_button.show();
+    btns.welcome_play.hide();
+    btns.welcome_play_pax_edition.hide();
+    //create select mate keyboard
+    createMateKeyBoard(key_pax_edition);
   });
+
   //keyboard 1 clear button
   createAButton("key_1_clear", "Clear", 0.8, 3 * 0.06 + 0.3 + 0.01, undefined, 0.8, () => {
     keyboard_1_input = "";
     s_select.play();
-  });
-  //keyboard 2 button
-  alphabet.forEach((a, index) => {
-    createAButton("key_2_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.6, undefined, 0.5, () => {
-      keyboard_2_input = a;
-      s_select.play();
-      // keyboard_2_input += a;
-    });
   });
   //keyboard 2 clear button
   createAButton("key_2_clear", "Clear", 0.8, 3 * 0.06 + 0.6 + 0.01, undefined, 0.8, () => {
@@ -199,7 +196,7 @@ function setup() {
     mateDisplay.push({ host: keyboard_1_input, mate: keyboard_2_input });
     keyboard_1_input = "";
     keyboard_2_input = "";
-    for (let letter of alphabet) {
+    for (let letter of cur_mate_keyboard) {
       let buttonKey1 = "key_1_" + letter;
       btns[buttonKey1].hide();
       let buttonKey2 = "key_2_" + letter;
@@ -254,6 +251,7 @@ function setup() {
   });
 
   btns.welcome_play.show();
+  btns.welcome_play_pax_edition.show();
   //set game status
   gamePage = "welcome";
   textFont(font_1);
@@ -300,6 +298,19 @@ function draw() {
     text("Drinking Party Game", width / 2, height * 0.35);
     pop();
   } else if (gamePage == "pick" || gamePage == "choose") {
+    //check the hover position
+    let set = false;
+    for (let c = cards.length - 1; c >= 0; c--) {
+      let card = cards[c];
+      if (mouseY > card.display.y - cshow_height / 2 && mouseY < card.display.y + cshow_height / 2 && !set) {
+        card.hover = true;
+        set = true;
+        cur_hover_card = c;
+      } else {
+        card.hover = false;
+      }
+    }
+    //////
     push();
     textAlign(CENTER);
     translate(width * 0.2, height * 0.5);
@@ -317,25 +328,16 @@ function draw() {
     let cshow_y_offset = map(choTimer, 0, 2000, 0, 1);
     cshow_y_offset = easeOutExpo(cshow_y_offset);
     cshow_y_offset = min(cshow_y_offset, 1);
-    cards.forEach((card) => {
+    cards.forEach((card, index) => {
       let cshow_x_offset = 0;
 
-      if (
-        mouseX > cshow_x - cshow_width / 2 &&
-        mouseX < cshow_x + cshow_width / 2 &&
-        mouseY > card.display.y - cshow_height / 2 &&
-        mouseY < card.display.y - cshow_height / 2 + cshow_gap
-      ) {
+      if (card.hover) {
         cshow_x_offset = 50;
       }
       // text(millis() - drew_timer, 50, 550);
       push();
       translate(cshow_x + cshow_x_offset, card.display.y * cshow_y_offset);
-      // push();
-      // fill(255);
-      // textSize(30);
-      // text(card.num, cshow_width / 2 + 30, 0);
-      // pop();
+      displayCardNum(card.num, index, cshow_width);
       rotate(radians(card.rotate));
       if (card.rotate180) {
         rotate(radians(180));
@@ -422,7 +424,7 @@ function draw() {
     text(keyboard_2_input + " drinks when " + keyboard_1_input + " drinks!", 0, 0);
     pop();
     if (aniTimer > 1800 && !showMateKeyboard) {
-      for (let letter of alphabet) {
+      for (let letter of cur_mate_keyboard) {
         let buttonKey1 = "key_1_" + letter;
         btns[buttonKey1].show();
         let buttonKey2 = "key_2_" + letter;
@@ -592,95 +594,25 @@ function draw() {
     pop();
     drew_timer = millis();
   }
-
-  //if Gameover
-  // if_game_over();
-
-  //if draw 6
-  // draw_case_6_in_draw();
-
-  // draw_a_card_run();
-
-  // let cgap = 15;
-  // let cwidth = 100;
-  // let cheight = 50;
-  // let pickCards = [];
-  // for (let c = 0; c < cards.length; c++) {
-  //   let cx = width / 2;
-  //   let cy = c * cgap + 50;
-  //   if (mouseX > cx && mouseX < cx + cwidth && mouseY > cy && mouseY < cy + cgap) {
-  //     cx += 50;
-  //   }
-  //   rect(cx, cy, cwidth, cheight);
-  // }
-
-  // card pick display
-
-  // push();
-  // fill(0, 255, 0);
-  // text(gamePage, 50, 50);
-  // pop();
 }
 function mouseReleased() {
   s_filp.stop();
-  cards.forEach((card, index) => {
-    if (
-      mouseX > cshow_x - cshow_width / 2 &&
-      mouseX < cshow_x + cshow_width / 2 &&
-      mouseY > card.display.y - cshow_height / 2 &&
-      mouseY < card.display.y - cshow_height / 2 + cshow_gap &&
-      gamePage == "choose" &&
-      millis() - choosePageTimer > 600
-    ) {
-      s_pick.play();
-
-      console.log(card.num, index);
-      currentNumber = card.num;
-      currentIndex = index;
-      cardAmount[card.num]--;
-      //important
-      // cards.splice(index, 1);
-      //run draw card function
-      //all the game cases switch in game-cases.js
-      game_cases_switch();
-      //random pick for case never ever and categories
-      //the lists are in all-list.js
-      never_current = random(never_list);
-      categories_current = random(categories_list);
-      // drew_timer -= 510;
-
-      gamePage = "hasChosen";
-      pickAniTimer = millis();
-      drew_timer = millis();
-      // if (currentNumber == 6) {
-      //   for (let letter of alphabet) {
-      //     let buttonKey1 = "key_1_" + letter;
-      //     btns[buttonKey1].show();
-      //     let buttonKey2 = "key_2_" + letter;
-      //     btns[buttonKey2].show();
-      //   }
-      //   btns.key_1_clear.show();
-      //   btns.key_2_clear.show();
-      //   btns.mate_submit.show();
-      //   gamePage = "selectMate";
-      // } else if (currentNumber == 13) {
-      //   king_cup_times++;
-      //   if (king_cup_times < 4) {
-      //     gamePage = "play";
-      //     btns.draw_button.show();
-      //   } else {
-      //     gamePage = "gameover";
-      //     winsound.play();
-      //   }
-      // } else {
-      //   gamePage = "play";
-      //   btns.draw_button.show();
-      // }
-    }
-  });
   //change pick start action to choose action
   if (gamePage == "pick") {
     gamePage = "choose";
+    return;
+  }
+  let cardR = cards[cur_hover_card];
+  if (gamePage == "choose" && millis() - choosePageTimer > 600) {
+    s_pick.play();
+    console.log(cardR.num, cur_hover_card);
+    currentNumber = cardR.num;
+    currentIndex = cur_hover_card;
+    cardAmount[cardR.num]--;
+    game_cases_switch();
+    gamePage = "hasChosen";
+    pickAniTimer = millis();
+    drew_timer = millis();
   }
 }
 function mousePressed() {
@@ -804,4 +736,45 @@ function easeOutExpo(x) {
 
 function easeInOutExpo(x) {
   return x === 0 ? 0 : x === 1 ? 1 : x < 0.5 ? Math.pow(2, 20 * x - 10) / 2 : (2 - Math.pow(2, -20 * x + 10)) / 2;
+}
+
+function createMateKeyBoard(edition, single_input = true) {
+  //keyboard 1  button
+  edition.forEach((a, index) => {
+    if (single_input) {
+      createAButton("key_1_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.3, undefined, 0.5, () => {
+        keyboard_1_input = a;
+        s_select.play();
+      });
+      //keyboard 2 button
+      edition.forEach((a, index) => {
+        createAButton("key_2_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.6, undefined, 0.5, () => {
+          keyboard_2_input = a;
+          s_select.play();
+        });
+      });
+    } else {
+      createAButton("key_1_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.3, undefined, 0.5, () => {
+        keyboard_1_input += a;
+        s_select.play();
+      });
+      edition.forEach((a, index) => {
+        createAButton("key_2_" + a, a, (index % 9) * 0.1 + 0.1, floor(index / 9) * 0.06 + 0.6, undefined, 0.5, () => {
+          keyboard_2_input += a;
+          s_select.play();
+        });
+      });
+    }
+  });
+  cur_mate_keyboard = edition;
+}
+function displayCardNum(cn, index, cw) {
+  if (devMode) {
+    push();
+    fill(255);
+    textSize(16);
+    text(cn, cw / 2 + 30, 0);
+    text(index, cw / 2 + 50, 0);
+    pop();
+  }
 }
