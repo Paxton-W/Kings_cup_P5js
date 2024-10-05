@@ -67,7 +67,7 @@ let font_1, font_2;
 let cshow_top, cshow_gap, cshow_width, cshow_height, cshow_x;
 //for select mate keyboard
 let key_standard = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".split(",");
-let key_pax_edition = "PAX,MAX,JOL,JER,SEB,MEL,EME,AGI,ALI".split(",");
+let key_pax_edition = "PAX,MAX,JOL,JER,SEB,MEL,EME,STE,ALI,JIM".split(",");
 let keyboard_1_input = "";
 let keyboard_2_input = "";
 let showMateKeyboard = false;
