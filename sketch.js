@@ -1088,7 +1088,7 @@ function draw_credit() {
   fill(255, 100);
   textSize(textSize_s);
   text("Developed By Paxton", width * 0.1, height - 4);
-  text("ver.3.1.0", width * 0.8, height - 4);
+  text("ver.3.2.0", width * 0.8, height - 4);
   pop();
 }
 
