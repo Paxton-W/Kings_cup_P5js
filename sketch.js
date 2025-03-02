@@ -1,6 +1,6 @@
 let center_e_clr;
 let game_over = false;
-let devMode = false;
+let devMode = true;
 let uiClr = { bg: "#0E1428", t1: "#F18805", t2: "#D95D39", t3: "#7B9E89" };
 //buttons array
 let btns = {};
@@ -91,6 +91,10 @@ let p5Var = {
     draw: "",
   },
 };
+
+let textSize_xs; // For very small text
+let textSize_xxs; // For extra small debug text
+
 function preload() {
   p5Var.font.LilitaOne = loadFont("assets/LilitaOne-Regular.ttf");
   p5Var.font.ShareTechMono = loadFont("assets/ShareTechMono-Regular.ttf");
@@ -140,7 +144,7 @@ function setup() {
     btns.welcome_play_quick.hide();
     btns.welcome_play.hide();
     btns.welcome_play_pax_edition.hide();
-
+    btns.quit.show();
     //create select mate keyboard
     createMateKeyBoard(mate.key_standard, false);
   });
@@ -150,6 +154,7 @@ function setup() {
     btns.welcome_play_quick.hide();
     btns.welcome_play.hide();
     btns.welcome_play_pax_edition.hide();
+    btns.quit.show();
     //create select mate keyboard
     createMateKeyBoard(mate.key_standard, false);
   });
@@ -159,6 +164,7 @@ function setup() {
     btns.welcome_play_quick.hide();
     btns.welcome_play.hide();
     btns.welcome_play_pax_edition.hide();
+    btns.quit.show();
     //create select mate keyboard
     createMateKeyBoard(mate.key_pax_edition);
   });
@@ -233,6 +239,12 @@ function setup() {
     draw_a_card();
   });
 
+  // Add quit button
+  createAButton("quit", "Quit", 0.9, 0.05, 0.8, 0.8, () => {
+    p5Var.sound.select.play();
+    resetGame();
+  });
+
   btns.welcome_play.show();
   btns.welcome_play_quick.show();
   btns.welcome_play_pax_edition.show();
@@ -269,7 +281,7 @@ function draw() {
     push();
     background(0);
     fill(255);
-    textSize(30);
+    textSize(textSize_m); // Changed from hardcoded 30
     textAlign(CENTER);
     text("please turn to portrait!", width / 2, height / 2);
     pop();
@@ -316,7 +328,7 @@ function draw() {
       translate(width * 0.2, height * 0.5);
       rotate(radians(90));
       fill(uiClr.t1);
-      textSize(60);
+      textSize(textSize_l);
       if (width > 500) text("pick a card", 0, 0);
       translate(0, -width * 0.6);
       rotate(radians(180));
@@ -408,7 +420,7 @@ function draw() {
       push();
       fill(uiClr.t2);
       textAlign(CENTER, CENTER);
-      textSize(40);
+      textSize(textSize_ml);
       translate(width * 0.5, height * 0.1);
       text("Select a mate", 0, 0);
       translate(0, height * 0.1);
@@ -416,7 +428,7 @@ function draw() {
       translate(0, height * 0.3);
       text("You choose", 0, 0);
       translate(0, height * 0.3);
-      textSize(25);
+      textSize(textSize_s);
       fill(uiClr.t1);
       text(mate.keyboard_2_input + " drinks when " + mate.keyboard_1_input + " drinks!", 0, 0);
       pop();
@@ -439,7 +451,7 @@ function draw() {
       translate(width * 0.2, height * 0.5);
       rotate(radians(90));
       fill(uiClr.t1);
-      textSize(60);
+      textSize(textSize_l);
       text("pick a card", 0, 0);
       translate(0, -width * 0.6);
       rotate(radians(180));
@@ -628,6 +640,7 @@ function windowResized() {
   console.log(pe.offsetWidth, pe.offsetHeight);
   resizeCanvas(pe.offsetWidth, pe.offsetHeight);
   sizeRefresh();
+  updateAllButtonPositions();
 }
 function sizeRefresh() {
   //var
@@ -652,13 +665,16 @@ function sizeRefresh() {
   }
   windowSize_base = width * 0.0015;
 
+  // Update all text sizes based on window size
+  textSize_xxs = windowSize_base * 16; // For debug text
+  textSize_xs = windowSize_base * 20; // For very small text
   textSize_s = windowSize_base * 22;
-  textSize_base = windowSize_base * 53;
   textSize_m = windowSize_base * 30;
   textSize_ml = windowSize_base * 40;
   textSize_l = windowSize_base * 70;
   textSize_xl = windowSize_base * 85;
   textSize_x = windowSize_base * 300;
+  textSize_base = windowSize_base * 53;
 }
 
 //createAButton(btn name, btn lable, x pos, y pos)
@@ -675,6 +691,8 @@ function createAButton(
 ) {
   let buttonVar = createButton(lable);
   buttonVar.sizeSet = { w: 0.2 * size * sizew, h: 0.07 * size, font: size };
+  buttonVar.xS = xS;
+  buttonVar.yS = yS;
   buttonVar.pos = { x: xS * ww - vw * buttonVar.sizeSet.w * 0.5, y: yS * hh - vh * buttonVar.sizeSet.h * 0.5 };
   buttonVar.position(buttonVar.pos.x, buttonVar.pos.y, "fixed");
   buttonVar.size(vw * buttonVar.sizeSet.w, vw * buttonVar.sizeSet.h);
@@ -686,17 +704,14 @@ function createAButton(
   buttonVar.trigger = false;
   buttonVar.mousePressed(() => {
     buttonVar.trigger = true;
-    // console.log(buttonVar);
     func();
   });
   //js eventlistener
   buttonVar.click = false;
   buttonVar.elt.addEventListener("click", () => {
-    // console.log(vari);
     buttonVar.click = true;
   });
   Object.assign(btns, { [vari]: buttonVar });
-  // console.log(buttonVar);
 }
 
 function showCurrentCard() {
@@ -778,7 +793,7 @@ function displayCardNum(cn, index, cw) {
   if (devMode) {
     push();
     fill(255);
-    textSize(16);
+    textSize(textSize_xxs); // Changed from hardcoded 16
     text(cn, cw / 2 + 30, 0);
     text(index, cw / 2 + 50, 0);
     pop();
@@ -891,8 +906,8 @@ const never_list = [
   "walked into glass",
   "taken a selfie",
   "worn pajamas outside",
-  "danced like no one’s watching",
-  "forgotten a friend’s name",
+  "danced like no one's watching",
+  "forgotten a friend's name",
   "used the wrong name",
   "tried learning guitar",
   "dyed my hair",
@@ -1213,4 +1228,57 @@ function mate_diaplay() {
   rotate(radians(180));
   text(mate_display_text, 0, 0);
   pop();
+}
+
+function updateAllButtonPositions() {
+  // Update each button's position and size
+  Object.values(btns).forEach((btn) => {
+    if (btn && btn.sizeSet) {
+      // Recalculate position based on original relative coordinates
+      btn.pos = {
+        x: btn.xS * ww - vw * btn.sizeSet.w * 0.5,
+        y: btn.yS * hh - vh * btn.sizeSet.h * 0.5,
+      };
+      // Update position
+      btn.position(btn.pos.x, btn.pos.y, "fixed");
+      // Update size
+      btn.size(vw * btn.sizeSet.w, vw * btn.sizeSet.h);
+      // Update font size
+      btn.style("font-size", String(vw * 0.025 * btn.sizeSet.font) + "pt");
+    }
+  });
+}
+
+function resetGame() {
+  // Reset all game state variables
+  cards = [];
+  mate.keyboard_1_input = "";
+  mate.keyboard_2_input = "";
+  mate.showMateKeyboard = false;
+  mate.mateDisplay = [];
+  currentNumber = 0;
+  currentText = "";
+  currentDis = false;
+  game_over = false;
+  cur_never_ever = "";
+  king_cup_times = 0;
+  draw_case_6 = false;
+  if_new_change = false;
+  friends_drink = [];
+  card_has_drawed = false;
+  lastNumber = 0;
+
+  // Hide all buttons except welcome screen buttons
+  Object.values(btns).forEach((btn) => btn.hide());
+  btns.welcome_play.show();
+  btns.welcome_play_quick.show();
+  btns.welcome_play_pax_edition.show();
+
+  // Reset card amounts
+  for (let i = 1; i <= 13; i++) {
+    cardAmount[i] = 0;
+  }
+
+  // Reset game page
+  gamePage = "welcome";
 }
