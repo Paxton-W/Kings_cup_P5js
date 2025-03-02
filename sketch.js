@@ -1,6 +1,6 @@
 let center_e_clr;
 let game_over = false;
-let devMode = true;
+let devMode = false;
 let uiClr = { bg: "#0E1428", t1: "#F18805", t2: "#D95D39", t3: "#7B9E89" };
 //buttons array
 let btns = {};
@@ -241,8 +241,12 @@ function setup() {
 
   // Add quit button
   createAButton("quit", "Quit", 0.9, 0.05, 0.8, 0.8, () => {
-    p5Var.sound.select.play();
-    resetGame();
+    // Add confirmation dialog
+    let confirmQuit = confirm("Are you sure you want to quit? All progress will be lost!");
+    if (confirmQuit) {
+      p5Var.sound.select.play();
+      resetGame();
+    }
   });
 
   btns.welcome_play.show();
