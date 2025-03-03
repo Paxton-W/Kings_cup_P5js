@@ -240,7 +240,7 @@ function setup() {
   });
 
   // Add quit button
-  createAButton("quit", "Quit", 0.9, 0.05, 0.8, 0.8, () => {
+  createAButton("quit", "Quit", 0.9, 0.98, 0.8, 0.8, () => {
     // Add confirmation dialog
     let confirmQuit = confirm("Are you sure you want to quit? All progress will be lost!");
     if (confirmQuit) {
